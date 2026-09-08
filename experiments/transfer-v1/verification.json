@@ -1,0 +1,19 @@
+{
+  "evaluator_version": "aaca9e0c866b3800fcdec2d17cf874cb76dd40cb6bed7580bc6a16dd4d2fd025",
+  "automated_checks": {
+    "pytest": "56 passed",
+    "ruff": "passed",
+    "basedpyright": "0 errors, 0 warnings"
+  },
+  "manual_cli_checks": {
+    "transfer_help": "rendered",
+    "scripted_two_case_execution": "completed, including intentionally failed agents with exit 1",
+    "missing_registration": "rejected with exit 2"
+  },
+  "test_fix": "Non-timeout transport cases now allow interpreter startup time; the timeout test retains its 0.5-second deadline. Production time limits unchanged.",
+  "model_preflight": {
+    "gpt-5.4": "unsupported account/model combination, HTTP 400",
+    "gpt-5.5": "valid structured finish response; diagnostic contained no case data"
+  },
+  "real_case_count": 0
+}

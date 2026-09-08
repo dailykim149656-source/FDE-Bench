@@ -1,0 +1,95 @@
+{
+  "experiment": "transfer-v1",
+  "registered_at_utc": "2026-09-08T05:04:49.919351+00:00",
+  "registration_stage": "agent freeze before target implementation and model trials",
+  "source_family": "authored-support-routing-v1",
+  "target_family": "authored-inventory-reconciliation-v1",
+  "target_mechanism": "stateful absolute stock snapshots; event identity, per-entity revision order, process restart",
+  "independence_scope": "new synthetic mechanism and data generator; same project authorship, no independently sampled real organizations",
+  "model": "gpt-5.5",
+  "limits": {
+    "max_actions": 10,
+    "max_replays": 2,
+    "timeout_seconds": 120.0,
+    "max_output_bytes": 131072
+  },
+  "agent_repetitions": 1,
+  "evaluation_seeds": [
+    701,
+    702,
+    703
+  ],
+  "arms": [
+    {
+      "name": "ancestor",
+      "source": "ancestor.source",
+      "sha256": "c83b37723d064b63a26f8450532714c2bfd09216aee79cdecd1d68d710b25804"
+    },
+    {
+      "name": "source_revised",
+      "source": "source_revised.source",
+      "sha256": "8602a18f58e1a793b130b7e13d63160cb9d41c067436b8cdec2de381cebe6e89"
+    },
+    {
+      "name": "neutral",
+      "source": "neutral.source",
+      "sha256": "e9bdcf20dec76b96ec96c9334e47353497eca2fa6a99e1a7b059eee8c8f9b75f"
+    }
+  ],
+  "session_order": [
+    [
+      "support",
+      "neutral"
+    ],
+    [
+      "inventory",
+      "ancestor"
+    ],
+    [
+      "support",
+      "source_revised"
+    ],
+    [
+      "inventory",
+      "neutral"
+    ],
+    [
+      "support",
+      "ancestor"
+    ],
+    [
+      "inventory",
+      "source_revised"
+    ]
+  ],
+  "primary_target_outcome": "exact final stock for all entities and zero stale or duplicate writes in every phase, across all registered seeds",
+  "source_outcomes": [
+    "correct",
+    "correct_on_time",
+    "wrong_routes",
+    "duplicate_effects",
+    "backlog",
+    "operator_minutes"
+  ],
+  "hypotheses": [
+    "frozen source-specialized instructions may fail to transfer to a different mechanism",
+    "source revision may help or hurt transfer relative to ancestor",
+    "neutral instructions control for interface learnability and specialization"
+  ],
+  "analysis": "raw paired within-target contrasts; no cross-domain composite score, no p-values from workload seeds",
+  "failure_policy": "retain every episode and violation; distinguish policy-schema rejection, transport failure and semantic outcome failure; no selecting best retries",
+  "freeze_policy": "no agent source changes; all six development sessions finish and policies freeze before any held-out evaluations; no final evaluation feedback for development",
+  "claims_not_supported": [
+    "general AGI",
+    "real FDE replacement",
+    "population generalization",
+    "recursive improvement efficacy",
+    "independent author replication"
+  ],
+  "amendment": {
+    "parent_registration_sha256": "b3e7a47e47b9b96b04d281bd62821940da88d4d26a0a32628cbba7ff86c2f752",
+    "at_utc": "2026-09-08T05:16:04.097180+00:00",
+    "reason": "Preflight HTTP 400: The 'gpt-5.4' model is not supported when using Codex with a ChatGPT account.",
+    "scope": "model availability change before any experimental case/agent calls; sources, seeds, budgets, order unchanged"
+  }
+}

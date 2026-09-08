@@ -1,0 +1,1223 @@
+{
+  "protocol": "fdebench.agent.v1",
+  "mode": "act",
+  "observation": {
+    "brief": "Repair dispatch for an authored, entirely synthetic B2B workspace support service. General triage is slow, client retries repeat account mutations, and some incidents describe more than one business area. Inspect the development evidence, configure the routing policy, replay to check the effects, and prepare a deployment that can survive traffic and message-format changes. Preserve correct, timely operations while reducing operator work and duplicate mutations.",
+    "runbook": {
+      "service": "Synthetic B2B workspace account operations; no real customer data.",
+      "queues": {
+        "manual": "Operator diagnoses the request and applies the appropriate mutation.",
+        "billing": "Applies one billing adjustment to the tenant's account.",
+        "access": "Grants one requested workspace entitlement.",
+        "security": "Rotates tenant sessions after suspected credential compromise."
+      },
+      "dispatch": "Rules are first-match, case-insensitive substrings of subject or body. Unmatched events use fallback. The selected queue performs its own operation, even if inappropriate. Incident containment takes precedence over ordinary account changes when credentials may be exposed.",
+      "identity": "event_id identifies a delivery; ticket_id identifies the requested mutation. Client timeouts can redeliver the same request with a new event_id. deduplicate suppresses later deliveries at intake, including pending requests.",
+      "capacity_per_tick": {
+        "manual": 1,
+        "billing": 4,
+        "access": 4,
+        "security": 2
+      },
+      "manual_minutes_per_completion": 5,
+      "clock": "A tick is one simulated service interval. Arrivals precede service at each tick; same-tick completion has zero latency. Queues use FIFO by arrival tick then input order. Ticks run from 0 through horizon_ticks - 1, without draining afterward. Latency and SLA deadlines start at the ticket's first arrival, including retries.",
+      "horizon_ticks": 16,
+      "sla_ticks": 4,
+      "metrics": {
+        "events": "Count of all delivery events inside the horizon.",
+        "unique_tickets": "Count of distinct requested mutations (ticket_id).",
+        "completed": "Events that wrote a transaction, including wrong or repeat work.",
+        "correct": "Count of distinct tickets with at least one appropriate transaction.",
+        "correct_on_time": "Distinct tickets with a correct transaction at latency <= SLA.",
+        "wrong_routes": "Completed events that performed an inappropriate operation.",
+        "duplicate_effects": "Transactions after the first transaction for a ticket.",
+        "backlog": "Queued, unsuppressed delivery events at the exclusive horizon.",
+        "operator_minutes": "Simulated operator minutes spent on completed manual events.",
+        "p95_latency_ticks": "Nearest-rank ceil(0.95 * completed) latency in ticks over completed events, including wrong and duplicate work; null if none completed.",
+        "accounting": "events = completed + backlog + deduplicated ledger rows.",
+        "effects": "Integer counts of synthetic account mutations, not currency amounts."
+      }
+    },
+    "schema": {
+      "ticket": {
+        "additionalProperties": false,
+        "description": "Only these observable fields may reach a submitted routing policy.",
+        "properties": {
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "ticket_id": {
+            "title": "Ticket Id",
+            "type": "string"
+          },
+          "arrival_tick": {
+            "minimum": 0,
+            "title": "Arrival Tick",
+            "type": "integer"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "body": {
+            "title": "Body",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "ticket_id",
+          "arrival_tick",
+          "subject",
+          "body"
+        ],
+        "title": "Ticket",
+        "type": "object"
+      },
+      "policy": {
+        "$defs": {
+          "Rule": {
+            "additionalProperties": false,
+            "properties": {
+              "field": {
+                "enum": [
+                  "subject",
+                  "body"
+                ],
+                "title": "Field",
+                "type": "string"
+              },
+              "contains": {
+                "maxLength": 100,
+                "minLength": 1,
+                "title": "Contains",
+                "type": "string"
+              },
+              "queue": {
+                "enum": [
+                  "manual",
+                  "billing",
+                  "access",
+                  "security"
+                ],
+                "title": "Queue",
+                "type": "string"
+              }
+            },
+            "required": [
+              "field",
+              "contains",
+              "queue"
+            ],
+            "title": "Rule",
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "properties": {
+          "rules": {
+            "default": [],
+            "items": {
+              "$ref": "#/$defs/Rule"
+            },
+            "maxItems": 30,
+            "title": "Rules",
+            "type": "array"
+          },
+          "fallback": {
+            "default": "manual",
+            "enum": [
+              "manual",
+              "billing",
+              "access",
+              "security"
+            ],
+            "title": "Fallback",
+            "type": "string"
+          },
+          "deduplicate": {
+            "default": false,
+            "title": "Deduplicate",
+            "type": "boolean"
+          }
+        },
+        "title": "Policy",
+        "type": "object"
+      }
+    },
+    "diagnostics": {
+      "reported_problem": "Manual triage is falling behind; tenants report repeated adjustments after retrying requests; new teammates and incident response wait in the same queue.",
+      "baseline_metrics": {
+        "events": 46,
+        "unique_tickets": 40,
+        "completed": 16,
+        "correct": 14,
+        "correct_on_time": 5,
+        "wrong_routes": 0,
+        "duplicate_effects": 2,
+        "backlog": 30,
+        "operator_minutes": 80,
+        "p95_latency_ticks": 13.0
+      },
+      "arrivals": [
+        {
+          "event_id": "development-17-active-e000-0",
+          "ticket_id": "development-17-active-t000",
+          "arrival_tick": 0,
+          "subject": "Compromised login",
+          "body": "Synthetic tenant 2204: Our payment portal credentials are compromised. Revoke sessions."
+        },
+        {
+          "event_id": "development-17-active-e001-0",
+          "ticket_id": "development-17-active-t001",
+          "arrival_tick": 0,
+          "subject": "Invoice discrepancy",
+          "body": "Synthetic tenant 6764: Apply one adjustment for the extra invoice line on our tenant."
+        },
+        {
+          "event_id": "development-17-active-e002-0",
+          "ticket_id": "development-17-active-t002",
+          "arrival_tick": 0,
+          "subject": "Membership request",
+          "body": "Synthetic tenant 4797: Activate the new teammate's membership once."
+        },
+        {
+          "event_id": "development-17-active-e003-0",
+          "ticket_id": "development-17-active-t003",
+          "arrival_tick": 0,
+          "subject": "Payment correction",
+          "body": "Synthetic tenant 1121: Our payment was posted twice; adjust the extra entry once."
+        },
+        {
+          "event_id": "development-17-active-e004-0",
+          "ticket_id": "development-17-active-t004",
+          "arrival_tick": 0,
+          "subject": "Password setup",
+          "body": "Synthetic tenant 3079: The invited user cannot finish password setup; grant the entitlement."
+        },
+        {
+          "event_id": "development-17-active-e000-1",
+          "ticket_id": "development-17-active-t000",
+          "arrival_tick": 1,
+          "subject": "Compromised login",
+          "body": "Synthetic tenant 2204: Our payment portal credentials are compromised. Revoke sessions."
+        },
+        {
+          "event_id": "development-17-active-e005-0",
+          "ticket_id": "development-17-active-t005",
+          "arrival_tick": 1,
+          "subject": "Charge review",
+          "body": "Synthetic tenant 9260: Please correct the duplicate charge with one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e006-0",
+          "ticket_id": "development-17-active-t006",
+          "arrival_tick": 1,
+          "subject": "Breach report",
+          "body": "Synthetic tenant 9399: A breach exposed the admin password. Revoke active tenant sessions."
+        },
+        {
+          "event_id": "development-17-active-e007-0",
+          "ticket_id": "development-17-active-t007",
+          "arrival_tick": 1,
+          "subject": "Access request",
+          "body": "Synthetic tenant 8861: Restore the teammate's entitlement to the shared workspace."
+        },
+        {
+          "event_id": "development-17-active-e007-1",
+          "ticket_id": "development-17-active-t007",
+          "arrival_tick": 1,
+          "subject": "Access request",
+          "body": "Synthetic tenant 8861: Restore the teammate's entitlement to the shared workspace."
+        },
+        {
+          "event_id": "development-17-active-e008-0",
+          "ticket_id": "development-17-active-t008",
+          "arrival_tick": 1,
+          "subject": "Charge review",
+          "body": "Synthetic tenant 5765: Please correct the duplicate charge with one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e009-0",
+          "ticket_id": "development-17-active-t009",
+          "arrival_tick": 1,
+          "subject": "Membership request",
+          "body": "Synthetic tenant 8272: Activate the new teammate's membership once."
+        },
+        {
+          "event_id": "development-17-active-e010-0",
+          "ticket_id": "development-17-active-t010",
+          "arrival_tick": 2,
+          "subject": "Charge review",
+          "body": "Synthetic tenant 1332: Please correct the duplicate charge with one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e011-0",
+          "ticket_id": "development-17-active-t011",
+          "arrival_tick": 2,
+          "subject": "Breach report",
+          "body": "Synthetic tenant 3156: A breach exposed the admin password. Revoke active tenant sessions."
+        },
+        {
+          "event_id": "development-17-active-e012-0",
+          "ticket_id": "development-17-active-t012",
+          "arrival_tick": 2,
+          "subject": "Login blocked",
+          "body": "Synthetic tenant 4107: Activate the invited teammate's workspace entitlement once."
+        },
+        {
+          "event_id": "development-17-active-e013-0",
+          "ticket_id": "development-17-active-t013",
+          "arrival_tick": 2,
+          "subject": "Login blocked",
+          "body": "Synthetic tenant 2696: Activate the invited teammate's workspace entitlement once."
+        },
+        {
+          "event_id": "development-17-active-e014-0",
+          "ticket_id": "development-17-active-t014",
+          "arrival_tick": 2,
+          "subject": "Bill correction",
+          "body": "Synthetic tenant 5723: The bill includes an extra seat. Apply one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e014-1",
+          "ticket_id": "development-17-active-t014",
+          "arrival_tick": 3,
+          "subject": "Bill correction",
+          "body": "Synthetic tenant 5723: The bill includes an extra seat. Apply one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e015-0",
+          "ticket_id": "development-17-active-t015",
+          "arrival_tick": 3,
+          "subject": "Invoice discrepancy",
+          "body": "Synthetic tenant 7248: Apply one adjustment for the extra invoice line on our tenant."
+        },
+        {
+          "event_id": "development-17-active-e016-0",
+          "ticket_id": "development-17-active-t016",
+          "arrival_tick": 3,
+          "subject": "Password setup",
+          "body": "Synthetic tenant 4603: The invited user cannot finish password setup; grant the entitlement."
+        },
+        {
+          "event_id": "development-17-active-e017-0",
+          "ticket_id": "development-17-active-t017",
+          "arrival_tick": 3,
+          "subject": "Membership request",
+          "body": "Synthetic tenant 6328: Activate the new teammate's membership once."
+        },
+        {
+          "event_id": "development-17-active-e018-0",
+          "ticket_id": "development-17-active-t018",
+          "arrival_tick": 3,
+          "subject": "Bill correction",
+          "body": "Synthetic tenant 7954: The bill includes an extra seat. Apply one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e019-0",
+          "ticket_id": "development-17-active-t019",
+          "arrival_tick": 3,
+          "subject": "Breach report",
+          "body": "Synthetic tenant 1940: A breach exposed the admin password. Revoke active tenant sessions."
+        },
+        {
+          "event_id": "development-17-active-e020-0",
+          "ticket_id": "development-17-active-t020",
+          "arrival_tick": 4,
+          "subject": "Login blocked",
+          "body": "Synthetic tenant 1926: Activate the invited teammate's workspace entitlement once."
+        },
+        {
+          "event_id": "development-17-active-e021-0",
+          "ticket_id": "development-17-active-t021",
+          "arrival_tick": 4,
+          "subject": "Bill correction",
+          "body": "Synthetic tenant 2152: The bill includes an extra seat. Apply one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e022-0",
+          "ticket_id": "development-17-active-t022",
+          "arrival_tick": 4,
+          "subject": "Payment correction",
+          "body": "Synthetic tenant 5099: Our payment was posted twice; adjust the extra entry once."
+        },
+        {
+          "event_id": "development-17-active-e023-0",
+          "ticket_id": "development-17-active-t023",
+          "arrival_tick": 4,
+          "subject": "Security incident",
+          "body": "Synthetic tenant 5139: Revoke tenant sessions after a security alert in the invoice portal."
+        },
+        {
+          "event_id": "development-17-active-e024-0",
+          "ticket_id": "development-17-active-t024",
+          "arrival_tick": 4,
+          "subject": "Access request",
+          "body": "Synthetic tenant 8893: Restore the teammate's entitlement to the shared workspace."
+        },
+        {
+          "event_id": "development-17-active-e021-1",
+          "ticket_id": "development-17-active-t021",
+          "arrival_tick": 5,
+          "subject": "Bill correction",
+          "body": "Synthetic tenant 2152: The bill includes an extra seat. Apply one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e025-0",
+          "ticket_id": "development-17-active-t025",
+          "arrival_tick": 5,
+          "subject": "Charge review",
+          "body": "Synthetic tenant 3936: Please correct the duplicate charge with one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e026-0",
+          "ticket_id": "development-17-active-t026",
+          "arrival_tick": 5,
+          "subject": "Password setup",
+          "body": "Synthetic tenant 6586: The invited user cannot finish password setup; grant the entitlement."
+        },
+        {
+          "event_id": "development-17-active-e027-0",
+          "ticket_id": "development-17-active-t027",
+          "arrival_tick": 5,
+          "subject": "Login blocked",
+          "body": "Synthetic tenant 4453: Activate the invited teammate's workspace entitlement once."
+        },
+        {
+          "event_id": "development-17-active-e028-0",
+          "ticket_id": "development-17-active-t028",
+          "arrival_tick": 5,
+          "subject": "Security incident",
+          "body": "Synthetic tenant 5998: Revoke tenant sessions after a security alert in the invoice portal."
+        },
+        {
+          "event_id": "development-17-active-e029-0",
+          "ticket_id": "development-17-active-t029",
+          "arrival_tick": 5,
+          "subject": "Bill correction",
+          "body": "Synthetic tenant 6371: The bill includes an extra seat. Apply one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e028-1",
+          "ticket_id": "development-17-active-t028",
+          "arrival_tick": 6,
+          "subject": "Security incident",
+          "body": "Synthetic tenant 5998: Revoke tenant sessions after a security alert in the invoice portal."
+        },
+        {
+          "event_id": "development-17-active-e030-0",
+          "ticket_id": "development-17-active-t030",
+          "arrival_tick": 6,
+          "subject": "Invoice discrepancy",
+          "body": "Synthetic tenant 5107: Apply one adjustment for the extra invoice line on our tenant."
+        },
+        {
+          "event_id": "development-17-active-e031-0",
+          "ticket_id": "development-17-active-t031",
+          "arrival_tick": 6,
+          "subject": "Password setup",
+          "body": "Synthetic tenant 5810: The invited user cannot finish password setup; grant the entitlement."
+        },
+        {
+          "event_id": "development-17-active-e032-0",
+          "ticket_id": "development-17-active-t032",
+          "arrival_tick": 6,
+          "subject": "Password setup",
+          "body": "Synthetic tenant 8909: The invited user cannot finish password setup; grant the entitlement."
+        },
+        {
+          "event_id": "development-17-active-e033-0",
+          "ticket_id": "development-17-active-t033",
+          "arrival_tick": 6,
+          "subject": "Bill correction",
+          "body": "Synthetic tenant 8445: The bill includes an extra seat. Apply one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e034-0",
+          "ticket_id": "development-17-active-t034",
+          "arrival_tick": 6,
+          "subject": "Breach report",
+          "body": "Synthetic tenant 7413: A breach exposed the admin password. Revoke active tenant sessions."
+        },
+        {
+          "event_id": "development-17-active-e035-0",
+          "ticket_id": "development-17-active-t035",
+          "arrival_tick": 7,
+          "subject": "Membership request",
+          "body": "Synthetic tenant 4231: Activate the new teammate's membership once."
+        },
+        {
+          "event_id": "development-17-active-e036-0",
+          "ticket_id": "development-17-active-t036",
+          "arrival_tick": 7,
+          "subject": "Password setup",
+          "body": "Synthetic tenant 6310: The invited user cannot finish password setup; grant the entitlement."
+        },
+        {
+          "event_id": "development-17-active-e037-0",
+          "ticket_id": "development-17-active-t037",
+          "arrival_tick": 7,
+          "subject": "Security incident",
+          "body": "Synthetic tenant 2659: Revoke tenant sessions after a security alert in the invoice portal."
+        },
+        {
+          "event_id": "development-17-active-e038-0",
+          "ticket_id": "development-17-active-t038",
+          "arrival_tick": 7,
+          "subject": "Bill correction",
+          "body": "Synthetic tenant 9263: The bill includes an extra seat. Apply one account adjustment."
+        },
+        {
+          "event_id": "development-17-active-e039-0",
+          "ticket_id": "development-17-active-t039",
+          "arrival_tick": 7,
+          "subject": "Invoice discrepancy",
+          "body": "Synthetic tenant 1273: Apply one adjustment for the extra invoice line on our tenant."
+        },
+        {
+          "event_id": "development-17-active-e035-1",
+          "ticket_id": "development-17-active-t035",
+          "arrival_tick": 8,
+          "subject": "Membership request",
+          "body": "Synthetic tenant 4231: Activate the new teammate's membership once."
+        }
+      ],
+      "records": [
+        {
+          "seq": 0,
+          "event_id": "development-17-active-e000-0",
+          "ticket_id": "development-17-active-t000",
+          "arrival_tick": 0,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 0,
+          "latency_ticks": 0,
+          "correct": 1,
+          "late": 0,
+          "duplicate": 0,
+          "operation": "security"
+        },
+        {
+          "seq": 1,
+          "event_id": "development-17-active-e001-0",
+          "ticket_id": "development-17-active-t001",
+          "arrival_tick": 0,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 1,
+          "latency_ticks": 1,
+          "correct": 1,
+          "late": 0,
+          "duplicate": 0,
+          "operation": "billing"
+        },
+        {
+          "seq": 2,
+          "event_id": "development-17-active-e002-0",
+          "ticket_id": "development-17-active-t002",
+          "arrival_tick": 0,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 2,
+          "latency_ticks": 2,
+          "correct": 1,
+          "late": 0,
+          "duplicate": 0,
+          "operation": "access"
+        },
+        {
+          "seq": 3,
+          "event_id": "development-17-active-e003-0",
+          "ticket_id": "development-17-active-t003",
+          "arrival_tick": 0,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 3,
+          "latency_ticks": 3,
+          "correct": 1,
+          "late": 0,
+          "duplicate": 0,
+          "operation": "billing"
+        },
+        {
+          "seq": 4,
+          "event_id": "development-17-active-e004-0",
+          "ticket_id": "development-17-active-t004",
+          "arrival_tick": 0,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 4,
+          "latency_ticks": 4,
+          "correct": 1,
+          "late": 0,
+          "duplicate": 0,
+          "operation": "access"
+        },
+        {
+          "seq": 5,
+          "event_id": "development-17-active-e000-1",
+          "ticket_id": "development-17-active-t000",
+          "arrival_tick": 1,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 5,
+          "latency_ticks": 5,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 1,
+          "operation": "security"
+        },
+        {
+          "seq": 6,
+          "event_id": "development-17-active-e005-0",
+          "ticket_id": "development-17-active-t005",
+          "arrival_tick": 1,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 6,
+          "latency_ticks": 5,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 0,
+          "operation": "billing"
+        },
+        {
+          "seq": 7,
+          "event_id": "development-17-active-e006-0",
+          "ticket_id": "development-17-active-t006",
+          "arrival_tick": 1,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 7,
+          "latency_ticks": 6,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 0,
+          "operation": "security"
+        },
+        {
+          "seq": 8,
+          "event_id": "development-17-active-e007-0",
+          "ticket_id": "development-17-active-t007",
+          "arrival_tick": 1,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 8,
+          "latency_ticks": 7,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 0,
+          "operation": "access"
+        },
+        {
+          "seq": 9,
+          "event_id": "development-17-active-e007-1",
+          "ticket_id": "development-17-active-t007",
+          "arrival_tick": 1,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 9,
+          "latency_ticks": 8,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 1,
+          "operation": "access"
+        },
+        {
+          "seq": 10,
+          "event_id": "development-17-active-e008-0",
+          "ticket_id": "development-17-active-t008",
+          "arrival_tick": 1,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 10,
+          "latency_ticks": 9,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 0,
+          "operation": "billing"
+        },
+        {
+          "seq": 11,
+          "event_id": "development-17-active-e009-0",
+          "ticket_id": "development-17-active-t009",
+          "arrival_tick": 1,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 11,
+          "latency_ticks": 10,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 0,
+          "operation": "access"
+        },
+        {
+          "seq": 12,
+          "event_id": "development-17-active-e010-0",
+          "ticket_id": "development-17-active-t010",
+          "arrival_tick": 2,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 12,
+          "latency_ticks": 10,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 0,
+          "operation": "billing"
+        },
+        {
+          "seq": 13,
+          "event_id": "development-17-active-e011-0",
+          "ticket_id": "development-17-active-t011",
+          "arrival_tick": 2,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 13,
+          "latency_ticks": 11,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 0,
+          "operation": "security"
+        },
+        {
+          "seq": 14,
+          "event_id": "development-17-active-e012-0",
+          "ticket_id": "development-17-active-t012",
+          "arrival_tick": 2,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 14,
+          "latency_ticks": 12,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 0,
+          "operation": "access"
+        },
+        {
+          "seq": 15,
+          "event_id": "development-17-active-e013-0",
+          "ticket_id": "development-17-active-t013",
+          "arrival_tick": 2,
+          "route": "manual",
+          "outcome": "completed",
+          "completed_tick": 15,
+          "latency_ticks": 13,
+          "correct": 1,
+          "late": 1,
+          "duplicate": 0,
+          "operation": "access"
+        },
+        {
+          "seq": 16,
+          "event_id": "development-17-active-e014-0",
+          "ticket_id": "development-17-active-t014",
+          "arrival_tick": 2,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 17,
+          "event_id": "development-17-active-e014-1",
+          "ticket_id": "development-17-active-t014",
+          "arrival_tick": 3,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 18,
+          "event_id": "development-17-active-e015-0",
+          "ticket_id": "development-17-active-t015",
+          "arrival_tick": 3,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 19,
+          "event_id": "development-17-active-e016-0",
+          "ticket_id": "development-17-active-t016",
+          "arrival_tick": 3,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 20,
+          "event_id": "development-17-active-e017-0",
+          "ticket_id": "development-17-active-t017",
+          "arrival_tick": 3,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 21,
+          "event_id": "development-17-active-e018-0",
+          "ticket_id": "development-17-active-t018",
+          "arrival_tick": 3,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 22,
+          "event_id": "development-17-active-e019-0",
+          "ticket_id": "development-17-active-t019",
+          "arrival_tick": 3,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 23,
+          "event_id": "development-17-active-e020-0",
+          "ticket_id": "development-17-active-t020",
+          "arrival_tick": 4,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 24,
+          "event_id": "development-17-active-e021-0",
+          "ticket_id": "development-17-active-t021",
+          "arrival_tick": 4,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 25,
+          "event_id": "development-17-active-e022-0",
+          "ticket_id": "development-17-active-t022",
+          "arrival_tick": 4,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 26,
+          "event_id": "development-17-active-e023-0",
+          "ticket_id": "development-17-active-t023",
+          "arrival_tick": 4,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 27,
+          "event_id": "development-17-active-e024-0",
+          "ticket_id": "development-17-active-t024",
+          "arrival_tick": 4,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 28,
+          "event_id": "development-17-active-e021-1",
+          "ticket_id": "development-17-active-t021",
+          "arrival_tick": 5,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 29,
+          "event_id": "development-17-active-e025-0",
+          "ticket_id": "development-17-active-t025",
+          "arrival_tick": 5,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 30,
+          "event_id": "development-17-active-e026-0",
+          "ticket_id": "development-17-active-t026",
+          "arrival_tick": 5,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 31,
+          "event_id": "development-17-active-e027-0",
+          "ticket_id": "development-17-active-t027",
+          "arrival_tick": 5,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 32,
+          "event_id": "development-17-active-e028-0",
+          "ticket_id": "development-17-active-t028",
+          "arrival_tick": 5,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 33,
+          "event_id": "development-17-active-e029-0",
+          "ticket_id": "development-17-active-t029",
+          "arrival_tick": 5,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 34,
+          "event_id": "development-17-active-e028-1",
+          "ticket_id": "development-17-active-t028",
+          "arrival_tick": 6,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 35,
+          "event_id": "development-17-active-e030-0",
+          "ticket_id": "development-17-active-t030",
+          "arrival_tick": 6,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 36,
+          "event_id": "development-17-active-e031-0",
+          "ticket_id": "development-17-active-t031",
+          "arrival_tick": 6,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 37,
+          "event_id": "development-17-active-e032-0",
+          "ticket_id": "development-17-active-t032",
+          "arrival_tick": 6,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 38,
+          "event_id": "development-17-active-e033-0",
+          "ticket_id": "development-17-active-t033",
+          "arrival_tick": 6,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 39,
+          "event_id": "development-17-active-e034-0",
+          "ticket_id": "development-17-active-t034",
+          "arrival_tick": 6,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 40,
+          "event_id": "development-17-active-e035-0",
+          "ticket_id": "development-17-active-t035",
+          "arrival_tick": 7,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 41,
+          "event_id": "development-17-active-e036-0",
+          "ticket_id": "development-17-active-t036",
+          "arrival_tick": 7,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 42,
+          "event_id": "development-17-active-e037-0",
+          "ticket_id": "development-17-active-t037",
+          "arrival_tick": 7,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 43,
+          "event_id": "development-17-active-e038-0",
+          "ticket_id": "development-17-active-t038",
+          "arrival_tick": 7,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 44,
+          "event_id": "development-17-active-e039-0",
+          "ticket_id": "development-17-active-t039",
+          "arrival_tick": 7,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        },
+        {
+          "seq": 45,
+          "event_id": "development-17-active-e035-1",
+          "ticket_id": "development-17-active-t035",
+          "arrival_tick": 8,
+          "route": "manual",
+          "outcome": "queued",
+          "completed_tick": null,
+          "latency_ticks": null,
+          "correct": 0,
+          "late": 0,
+          "duplicate": 0,
+          "operation": null
+        }
+      ],
+      "effects": [
+        {
+          "ticket_id": "development-17-active-t000",
+          "billing_adjustments": 0,
+          "access_grants": 0,
+          "security_rotations": 2
+        },
+        {
+          "ticket_id": "development-17-active-t001",
+          "billing_adjustments": 1,
+          "access_grants": 0,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t002",
+          "billing_adjustments": 0,
+          "access_grants": 1,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t003",
+          "billing_adjustments": 1,
+          "access_grants": 0,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t004",
+          "billing_adjustments": 0,
+          "access_grants": 1,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t005",
+          "billing_adjustments": 1,
+          "access_grants": 0,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t006",
+          "billing_adjustments": 0,
+          "access_grants": 0,
+          "security_rotations": 1
+        },
+        {
+          "ticket_id": "development-17-active-t007",
+          "billing_adjustments": 0,
+          "access_grants": 2,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t008",
+          "billing_adjustments": 1,
+          "access_grants": 0,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t009",
+          "billing_adjustments": 0,
+          "access_grants": 1,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t010",
+          "billing_adjustments": 1,
+          "access_grants": 0,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t011",
+          "billing_adjustments": 0,
+          "access_grants": 0,
+          "security_rotations": 1
+        },
+        {
+          "ticket_id": "development-17-active-t012",
+          "billing_adjustments": 0,
+          "access_grants": 1,
+          "security_rotations": 0
+        },
+        {
+          "ticket_id": "development-17-active-t013",
+          "billing_adjustments": 0,
+          "access_grants": 1,
+          "security_rotations": 0
+        }
+      ]
+    }
+  },
+  "history": [],
+  "source": null
+}

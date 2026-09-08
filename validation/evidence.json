@@ -1,0 +1,1171 @@
+{
+  "evaluator_version": "8e003479c6404fe47221b21eb2b380fe4c34b19bb10fb1de271c6e61d3bc40b8",
+  "scope": "implementation and public authored synthetic workflow; no human or AGI validation",
+  "code_review_state": "workspace changes, not a new git commit",
+  "codex_cli_version_observed": "0.144.4",
+  "model_identity_evidence": "configured-default alias, immutable provider snapshot not established",
+  "checks": [
+    {
+      "command": "uv run pytest -q",
+      "outcome": "36 passed"
+    },
+    {
+      "command": "uv run ruff check fdebench tests examples",
+      "outcome": "All checks passed"
+    },
+    {
+      "command": "uv run basedpyright",
+      "outcome": "0 errors, 0 warnings, 0 notes"
+    },
+    {
+      "command": "uv build; fresh venv wheel installation; fdebench run",
+      "outcome": "build and installed CLI run completed"
+    },
+    {
+      "check": "CLI help, missing suite, invalid generation, duplicate archive input",
+      "outcome": "help rendered; invalid inputs exit 2"
+    },
+    {
+      "check": "malformed agent CLI execution",
+      "outcome": "exit 1; failure retained; unmeasured usage null"
+    },
+    {
+      "check": "stdout/stderr exit-race stress",
+      "outcome": "40/40 correctly classified output_limit"
+    },
+    {
+      "check": "reference evaluation SQLite integrity, canonical ledger hash and transaction count",
+      "databases_verified": 120
+    },
+    {
+      "check": "extracted bundle replay and archived comparison using installed wheel",
+      "outcome": "completed; source version and metrics match"
+    },
+    {
+      "check": "live model instruction revision and next active invocation",
+      "outcome": "candidate_invoked",
+      "scope": "live model instruction revision and next invocation only; no improvement or recursion success claim",
+      "result_path": "model-revision-smoke/result.json"
+    }
+  ],
+  "runs": {
+    "reference-baseline": {
+      "results_sha256": "e173ad3d92cc210465add19d72739f4cc64e0622d72510b37466d66286fce384",
+      "execution_status": "completed",
+      "episode_count": 1,
+      "summary": {
+        "systems": [
+          {
+            "name": "baseline-control",
+            "kind": "scripted_control",
+            "runs": 1,
+            "finished_sessions": 1,
+            "deployed_sessions": 1,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 48.0,
+                "min": 48.0,
+                "max": 48.0,
+                "sample_sd": null
+              },
+              "correct": {
+                "mean": 35.0,
+                "min": 35.0,
+                "max": 35.0,
+                "sample_sd": null
+              },
+              "correct_on_time": {
+                "mean": 10.0,
+                "min": 10.0,
+                "max": 10.0,
+                "sample_sd": null
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": null
+              },
+              "duplicate_effects": {
+                "mean": 13.0,
+                "min": 13.0,
+                "max": 13.0,
+                "sample_sd": null
+              },
+              "backlog": {
+                "mean": 478.0,
+                "min": 478.0,
+                "max": 478.0,
+                "sample_sd": null
+              },
+              "operator_minutes": {
+                "mean": 240.0,
+                "min": 240.0,
+                "max": 240.0,
+                "sample_sd": null
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 0.0,
+              "correct": 0.0,
+              "correct_on_time": 0.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 0.0,
+              "backlog": 0.0,
+              "operator_minutes": 0.0
+            }
+          }
+        ],
+        "contrasts": [],
+        "ranking": null,
+        "replication_unit": "workload seeds within one authored family; not independent FDE cases",
+        "score_definition": "raw phase totals, no composite score; latency remains per-phase"
+      }
+    },
+    "reference-controls": {
+      "results_sha256": "51de239a47b857c07bfd8e8a21ba904427f90358328997282ed35c93dbbb8484",
+      "execution_status": "completed",
+      "episode_count": 6,
+      "summary": {
+        "systems": [
+          {
+            "name": "baseline-control",
+            "kind": "scripted_control",
+            "runs": 3,
+            "finished_sessions": 3,
+            "deployed_sessions": 3,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 48.0,
+                "min": 48.0,
+                "max": 48.0,
+                "sample_sd": 0.0
+              },
+              "correct": {
+                "mean": 35.0,
+                "min": 34.0,
+                "max": 36.0,
+                "sample_sd": 1.0
+              },
+              "correct_on_time": {
+                "mean": 11.666666666666666,
+                "min": 10.0,
+                "max": 14.0,
+                "sample_sd": 2.0816659994661326
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "duplicate_effects": {
+                "mean": 13.0,
+                "min": 12.0,
+                "max": 14.0,
+                "sample_sd": 1.0
+              },
+              "backlog": {
+                "mean": 478.0,
+                "min": 478.0,
+                "max": 478.0,
+                "sample_sd": 0.0
+              },
+              "operator_minutes": {
+                "mean": 240.0,
+                "min": 240.0,
+                "max": 240.0,
+                "sample_sd": 0.0
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 0.0,
+              "correct": 0.0,
+              "correct_on_time": 0.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 0.0,
+              "backlog": 0.0,
+              "operator_minutes": 0.0
+            }
+          },
+          {
+            "name": "routing-control",
+            "kind": "scripted_control",
+            "runs": 3,
+            "finished_sessions": 3,
+            "deployed_sessions": 3,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 222.0,
+                "min": 222.0,
+                "max": 222.0,
+                "sample_sd": 0.0
+              },
+              "correct": {
+                "mean": 136.33333333333334,
+                "min": 135.0,
+                "max": 137.0,
+                "sample_sd": 1.1547005383792515
+              },
+              "correct_on_time": {
+                "mean": 74.0,
+                "min": 73.0,
+                "max": 75.0,
+                "sample_sd": 1.0
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "duplicate_effects": {
+                "mean": 85.66666666666667,
+                "min": 85.0,
+                "max": 87.0,
+                "sample_sd": 1.1547005383792515
+              },
+              "backlog": {
+                "mean": 304.0,
+                "min": 304.0,
+                "max": 304.0,
+                "sample_sd": 0.0
+              },
+              "operator_minutes": {
+                "mean": 80.0,
+                "min": 80.0,
+                "max": 80.0,
+                "sample_sd": 0.0
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 174.0,
+              "correct": 101.33333333333333,
+              "correct_on_time": 62.333333333333336,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 72.66666666666667,
+              "backlog": -174.0,
+              "operator_minutes": -160.0
+            }
+          }
+        ],
+        "contrasts": [
+          {
+            "left": "baseline-control",
+            "right": "routing-control",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 174.0,
+              "correct": 101.33333333333333,
+              "correct_on_time": 62.333333333333336,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 72.66666666666667,
+              "backlog": -174.0,
+              "operator_minutes": -160.0
+            }
+          }
+        ],
+        "ranking": null,
+        "replication_unit": "workload seeds within one authored family; not independent FDE cases",
+        "score_definition": "raw phase totals, no composite score; latency remains per-phase"
+      }
+    },
+    "reference-evolution": {
+      "results_sha256": "5c515abf8deedbeed4c293bfa806a5c68d870f21a8fef017ef7f2a7ddb5f6363",
+      "execution_status": "completed",
+      "episode_count": 12,
+      "summary": {
+        "systems": [
+          {
+            "name": "recursive-0",
+            "kind": "scripted_control",
+            "runs": 2,
+            "finished_sessions": 2,
+            "deployed_sessions": 2,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 48.0,
+                "min": 48.0,
+                "max": 48.0,
+                "sample_sd": 0.0
+              },
+              "correct": {
+                "mean": 36.5,
+                "min": 36.0,
+                "max": 37.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "correct_on_time": {
+                "mean": 11.5,
+                "min": 11.0,
+                "max": 12.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "duplicate_effects": {
+                "mean": 11.5,
+                "min": 11.0,
+                "max": 12.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "backlog": {
+                "mean": 478.0,
+                "min": 478.0,
+                "max": 478.0,
+                "sample_sd": 0.0
+              },
+              "operator_minutes": {
+                "mean": 240.0,
+                "min": 240.0,
+                "max": 240.0,
+                "sample_sd": 0.0
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 0.0,
+              "correct": 0.0,
+              "correct_on_time": 0.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 0.0,
+              "backlog": 0.0,
+              "operator_minutes": 0.0
+            }
+          },
+          {
+            "name": "recursive-1",
+            "kind": "scripted_control",
+            "runs": 2,
+            "finished_sessions": 2,
+            "deployed_sessions": 2,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 222.0,
+                "min": 222.0,
+                "max": 222.0,
+                "sample_sd": 0.0
+              },
+              "correct": {
+                "mean": 139.5,
+                "min": 139.0,
+                "max": 140.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "correct_on_time": {
+                "mean": 73.5,
+                "min": 73.0,
+                "max": 74.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "duplicate_effects": {
+                "mean": 82.5,
+                "min": 82.0,
+                "max": 83.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "backlog": {
+                "mean": 304.0,
+                "min": 304.0,
+                "max": 304.0,
+                "sample_sd": 0.0
+              },
+              "operator_minutes": {
+                "mean": 80.0,
+                "min": 80.0,
+                "max": 80.0,
+                "sample_sd": 0.0
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 174.0,
+              "correct": 103.0,
+              "correct_on_time": 62.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 71.0,
+              "backlog": -174.0,
+              "operator_minutes": -160.0
+            }
+          },
+          {
+            "name": "recursive-2",
+            "kind": "scripted_control",
+            "runs": 2,
+            "finished_sessions": 2,
+            "deployed_sessions": 2,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 280.0,
+                "min": 280.0,
+                "max": 280.0,
+                "sample_sd": 0.0
+              },
+              "correct": {
+                "mean": 280.0,
+                "min": 280.0,
+                "max": 280.0,
+                "sample_sd": 0.0
+              },
+              "correct_on_time": {
+                "mean": 180.0,
+                "min": 180.0,
+                "max": 180.0,
+                "sample_sd": 0.0
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "duplicate_effects": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "backlog": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "operator_minutes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 232.0,
+              "correct": 243.5,
+              "correct_on_time": 168.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -11.5,
+              "backlog": -478.0,
+              "operator_minutes": -240.0
+            }
+          },
+          {
+            "name": "fixed_optimizer-0",
+            "kind": "scripted_control",
+            "runs": 2,
+            "finished_sessions": 2,
+            "deployed_sessions": 2,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 48.0,
+                "min": 48.0,
+                "max": 48.0,
+                "sample_sd": 0.0
+              },
+              "correct": {
+                "mean": 36.5,
+                "min": 36.0,
+                "max": 37.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "correct_on_time": {
+                "mean": 11.5,
+                "min": 11.0,
+                "max": 12.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "duplicate_effects": {
+                "mean": 11.5,
+                "min": 11.0,
+                "max": 12.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "backlog": {
+                "mean": 478.0,
+                "min": 478.0,
+                "max": 478.0,
+                "sample_sd": 0.0
+              },
+              "operator_minutes": {
+                "mean": 240.0,
+                "min": 240.0,
+                "max": 240.0,
+                "sample_sd": 0.0
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 0.0,
+              "correct": 0.0,
+              "correct_on_time": 0.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 0.0,
+              "backlog": 0.0,
+              "operator_minutes": 0.0
+            }
+          },
+          {
+            "name": "fixed_optimizer-1",
+            "kind": "scripted_control",
+            "runs": 2,
+            "finished_sessions": 2,
+            "deployed_sessions": 2,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 222.0,
+                "min": 222.0,
+                "max": 222.0,
+                "sample_sd": 0.0
+              },
+              "correct": {
+                "mean": 139.5,
+                "min": 139.0,
+                "max": 140.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "correct_on_time": {
+                "mean": 73.5,
+                "min": 73.0,
+                "max": 74.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "duplicate_effects": {
+                "mean": 82.5,
+                "min": 82.0,
+                "max": 83.0,
+                "sample_sd": 0.7071067811865476
+              },
+              "backlog": {
+                "mean": 304.0,
+                "min": 304.0,
+                "max": 304.0,
+                "sample_sd": 0.0
+              },
+              "operator_minutes": {
+                "mean": 80.0,
+                "min": 80.0,
+                "max": 80.0,
+                "sample_sd": 0.0
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 174.0,
+              "correct": 103.0,
+              "correct_on_time": 62.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 71.0,
+              "backlog": -174.0,
+              "operator_minutes": -160.0
+            }
+          },
+          {
+            "name": "fixed_optimizer-2",
+            "kind": "scripted_control",
+            "runs": 2,
+            "finished_sessions": 2,
+            "deployed_sessions": 2,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 280.0,
+                "min": 280.0,
+                "max": 280.0,
+                "sample_sd": 0.0
+              },
+              "correct": {
+                "mean": 280.0,
+                "min": 280.0,
+                "max": 280.0,
+                "sample_sd": 0.0
+              },
+              "correct_on_time": {
+                "mean": 180.0,
+                "min": 180.0,
+                "max": 180.0,
+                "sample_sd": 0.0
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "duplicate_effects": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "backlog": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              },
+              "operator_minutes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": 0.0
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 232.0,
+              "correct": 243.5,
+              "correct_on_time": 168.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -11.5,
+              "backlog": -478.0,
+              "operator_minutes": -240.0
+            }
+          }
+        ],
+        "contrasts": [
+          {
+            "left": "recursive-0",
+            "right": "recursive-1",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 174.0,
+              "correct": 103.0,
+              "correct_on_time": 62.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 71.0,
+              "backlog": -174.0,
+              "operator_minutes": -160.0
+            }
+          },
+          {
+            "left": "recursive-0",
+            "right": "recursive-2",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 232.0,
+              "correct": 243.5,
+              "correct_on_time": 168.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -11.5,
+              "backlog": -478.0,
+              "operator_minutes": -240.0
+            }
+          },
+          {
+            "left": "recursive-0",
+            "right": "fixed_optimizer-0",
+            "changed_components": [],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 0.0,
+              "correct": 0.0,
+              "correct_on_time": 0.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 0.0,
+              "backlog": 0.0,
+              "operator_minutes": 0.0
+            }
+          },
+          {
+            "left": "recursive-0",
+            "right": "fixed_optimizer-1",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 174.0,
+              "correct": 103.0,
+              "correct_on_time": 62.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 71.0,
+              "backlog": -174.0,
+              "operator_minutes": -160.0
+            }
+          },
+          {
+            "left": "recursive-0",
+            "right": "fixed_optimizer-2",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 232.0,
+              "correct": 243.5,
+              "correct_on_time": 168.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -11.5,
+              "backlog": -478.0,
+              "operator_minutes": -240.0
+            }
+          },
+          {
+            "left": "recursive-1",
+            "right": "recursive-2",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 58.0,
+              "correct": 140.5,
+              "correct_on_time": 106.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -82.5,
+              "backlog": -304.0,
+              "operator_minutes": -80.0
+            }
+          },
+          {
+            "left": "recursive-1",
+            "right": "fixed_optimizer-0",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": -174.0,
+              "correct": -103.0,
+              "correct_on_time": -62.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -71.0,
+              "backlog": 174.0,
+              "operator_minutes": 160.0
+            }
+          },
+          {
+            "left": "recursive-1",
+            "right": "fixed_optimizer-1",
+            "changed_components": [],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 0.0,
+              "correct": 0.0,
+              "correct_on_time": 0.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 0.0,
+              "backlog": 0.0,
+              "operator_minutes": 0.0
+            }
+          },
+          {
+            "left": "recursive-1",
+            "right": "fixed_optimizer-2",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 58.0,
+              "correct": 140.5,
+              "correct_on_time": 106.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -82.5,
+              "backlog": -304.0,
+              "operator_minutes": -80.0
+            }
+          },
+          {
+            "left": "recursive-2",
+            "right": "fixed_optimizer-0",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": -232.0,
+              "correct": -243.5,
+              "correct_on_time": -168.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 11.5,
+              "backlog": 478.0,
+              "operator_minutes": 240.0
+            }
+          },
+          {
+            "left": "recursive-2",
+            "right": "fixed_optimizer-1",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": -58.0,
+              "correct": -140.5,
+              "correct_on_time": -106.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 82.5,
+              "backlog": 304.0,
+              "operator_minutes": 80.0
+            }
+          },
+          {
+            "left": "recursive-2",
+            "right": "fixed_optimizer-2",
+            "changed_components": [],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 0.0,
+              "correct": 0.0,
+              "correct_on_time": 0.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 0.0,
+              "backlog": 0.0,
+              "operator_minutes": 0.0
+            }
+          },
+          {
+            "left": "fixed_optimizer-0",
+            "right": "fixed_optimizer-1",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 174.0,
+              "correct": 103.0,
+              "correct_on_time": 62.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 71.0,
+              "backlog": -174.0,
+              "operator_minutes": -160.0
+            }
+          },
+          {
+            "left": "fixed_optimizer-0",
+            "right": "fixed_optimizer-2",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 232.0,
+              "correct": 243.5,
+              "correct_on_time": 168.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -11.5,
+              "backlog": -478.0,
+              "operator_minutes": -240.0
+            }
+          },
+          {
+            "left": "fixed_optimizer-1",
+            "right": "fixed_optimizer-2",
+            "changed_components": [
+              "agent_source"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 58.0,
+              "correct": 140.5,
+              "correct_on_time": 106.5,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -82.5,
+              "backlog": -304.0,
+              "operator_minutes": -80.0
+            }
+          }
+        ],
+        "ranking": null,
+        "replication_unit": "workload seeds within one authored family; not independent FDE cases",
+        "score_definition": "raw phase totals, no composite score; latency remains per-phase"
+      }
+    },
+    "reference-codex": {
+      "results_sha256": "ef056278fba09fbc0a3cff18ea8017d4183851fb8f0e40d02f0c408aca204fde",
+      "execution_status": "completed",
+      "episode_count": 1,
+      "summary": {
+        "systems": [
+          {
+            "name": "codex-agent",
+            "kind": "model_backed",
+            "runs": 1,
+            "finished_sessions": 1,
+            "deployed_sessions": 1,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 266.0,
+                "min": 266.0,
+                "max": 266.0,
+                "sample_sd": null
+              },
+              "correct": {
+                "mean": 266.0,
+                "min": 266.0,
+                "max": 266.0,
+                "sample_sd": null
+              },
+              "correct_on_time": {
+                "mean": 185.0,
+                "min": 185.0,
+                "max": 185.0,
+                "sample_sd": null
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": null
+              },
+              "duplicate_effects": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": null
+              },
+              "backlog": {
+                "mean": 14.0,
+                "min": 14.0,
+                "max": 14.0,
+                "sample_sd": null
+              },
+              "operator_minutes": {
+                "mean": 80.0,
+                "min": 80.0,
+                "max": 80.0,
+                "sample_sd": null
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 218.0,
+              "correct": 231.0,
+              "correct_on_time": 175.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -13.0,
+              "backlog": -464.0,
+              "operator_minutes": -160.0
+            }
+          }
+        ],
+        "contrasts": [],
+        "ranking": null,
+        "replication_unit": "workload seeds within one authored family; not independent FDE cases",
+        "score_definition": "raw phase totals, no composite score; latency remains per-phase"
+      }
+    },
+    "reference-comparison": {
+      "results_sha256": "757086ea75a51df5ef4de2fad932973544fc4fd16a830730965a67eda5753d58",
+      "execution_status": "completed",
+      "episode_count": 2,
+      "summary": {
+        "systems": [
+          {
+            "name": "baseline-control",
+            "kind": "scripted_control",
+            "runs": 1,
+            "finished_sessions": 1,
+            "deployed_sessions": 1,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 48.0,
+                "min": 48.0,
+                "max": 48.0,
+                "sample_sd": null
+              },
+              "correct": {
+                "mean": 35.0,
+                "min": 35.0,
+                "max": 35.0,
+                "sample_sd": null
+              },
+              "correct_on_time": {
+                "mean": 10.0,
+                "min": 10.0,
+                "max": 10.0,
+                "sample_sd": null
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": null
+              },
+              "duplicate_effects": {
+                "mean": 13.0,
+                "min": 13.0,
+                "max": 13.0,
+                "sample_sd": null
+              },
+              "backlog": {
+                "mean": 478.0,
+                "min": 478.0,
+                "max": 478.0,
+                "sample_sd": null
+              },
+              "operator_minutes": {
+                "mean": 240.0,
+                "min": 240.0,
+                "max": 240.0,
+                "sample_sd": null
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 0.0,
+              "correct": 0.0,
+              "correct_on_time": 0.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": 0.0,
+              "backlog": 0.0,
+              "operator_minutes": 0.0
+            }
+          },
+          {
+            "name": "codex-agent",
+            "kind": "model_backed",
+            "runs": 1,
+            "finished_sessions": 1,
+            "deployed_sessions": 1,
+            "action_violations": 0,
+            "raw_phase_totals": {
+              "completed": {
+                "mean": 266.0,
+                "min": 266.0,
+                "max": 266.0,
+                "sample_sd": null
+              },
+              "correct": {
+                "mean": 266.0,
+                "min": 266.0,
+                "max": 266.0,
+                "sample_sd": null
+              },
+              "correct_on_time": {
+                "mean": 185.0,
+                "min": 185.0,
+                "max": 185.0,
+                "sample_sd": null
+              },
+              "wrong_routes": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": null
+              },
+              "duplicate_effects": {
+                "mean": 0.0,
+                "min": 0.0,
+                "max": 0.0,
+                "sample_sd": null
+              },
+              "backlog": {
+                "mean": 14.0,
+                "min": 14.0,
+                "max": 14.0,
+                "sample_sd": null
+              },
+              "operator_minutes": {
+                "mean": 80.0,
+                "min": 80.0,
+                "max": 80.0,
+                "sample_sd": null
+              }
+            },
+            "mean_delta_from_baseline": {
+              "completed": 218.0,
+              "correct": 231.0,
+              "correct_on_time": 175.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -13.0,
+              "backlog": -464.0,
+              "operator_minutes": -160.0
+            }
+          }
+        ],
+        "contrasts": [
+          {
+            "left": "baseline-control",
+            "right": "codex-agent",
+            "changed_components": [
+              "declared_model",
+              "agent_source",
+              "harness"
+            ],
+            "resource_limits_changed": false,
+            "interpretation": "declared_component_comparison",
+            "right_minus_left": {
+              "completed": 218.0,
+              "correct": 231.0,
+              "correct_on_time": 175.0,
+              "wrong_routes": 0.0,
+              "duplicate_effects": -13.0,
+              "backlog": -464.0,
+              "operator_minutes": -160.0
+            }
+          }
+        ],
+        "ranking": null,
+        "replication_unit": "workload seeds within one authored family; not independent FDE cases",
+        "score_definition": "raw phase totals, no composite score; latency remains per-phase"
+      }
+    }
+  },
+  "bundle": {
+    "path": "reference_bundle.zip",
+    "sha256": "e089dfbf53b0d9d27bca2686ee9c62483f26957423b4c12c4799c96a33709f0a",
+    "bytes": 5080309,
+    "artifact_count": 301,
+    "all_entry_hashes_verified": true
+  },
+  "model_revision_artifacts": {
+    "model-revision-smoke/ancestor.source": "c83b37723d064b63a26f8450532714c2bfd09216aee79cdecd1d68d710b25804",
+    "model-revision-smoke/candidate.source": "8602a18f58e1a793b130b7e13d63160cb9d41c067436b8cdec2de381cebe6e89",
+    "model-revision-smoke/improvement-request.json": "ec298f2beb680cd5debbb02ddfffa53f6876b56b20b903bc29608cc35f0f58f6",
+    "model-revision-smoke/improvement.json": "603f28679a027899bbc85a2cb36aadddfbfd562aac60d62b6f28bd0d50455e2a",
+    "model-revision-smoke/next-action.json": "7395e95b9d068f8a91b18b71a847820db5e83a3463c5b58264ba52ccea923f55",
+    "model-revision-smoke/next-request.json": "8f5e833218c888e82edf5ea7de8dd6e6712b4b9a3aecf6e53701855d289ac7c5",
+    "model-revision-smoke/result.json": "4ccb23ebacf88cbaf855400d1f9e5b67ec5c75dadb410ec4434abc5880b411af"
+  }
+}

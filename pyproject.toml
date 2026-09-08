@@ -35,4 +35,3 @@ ignore = ["S603", "S607"] # Explicit argv subprocess adapters; never invoke a sh
 typeCheckingMode = "strict"
 pythonVersion = "3.12"
 include = ["fdebench"]
-

@@ -1,0 +1,12 @@
+{
+  "evaluator_version": "aaca9e0c866b3800fcdec2d17cf874cb76dd40cb6bed7580bc6a16dd4d2fd025",
+  "results_sha256": "0f75af43efe30fd72c670199aebd37a689a33f33b889a654cfb67aff5bec45e0",
+  "database_integrity_checks": 72,
+  "phase_ledger_hashes_verified": 108,
+  "source_policy_registration_hashes": "matched",
+  "baseline_across_arms": "identical per case/seed/phase",
+  "candidate_baseline_workloads": "matched",
+  "freeze_file_order": "all sessions before freeze; evaluations after freeze",
+  "inventory_checkpoint_quality": "recomputed from persisted effects and truth",
+  "scope": "Artifact consistency audit by implementing team, not independent scientific validation"
+}

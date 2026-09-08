@@ -1,0 +1,14 @@
+{
+  "evaluator_version": "8e003479c6404fe47221b21eb2b380fe4c34b19bb10fb1de271c6e61d3bc40b8",
+  "scope": "live model instruction revision and next invocation only; no improvement or recursion success claim",
+  "model_label": "configured-default",
+  "codex_cli_version_observed": "0.144.4",
+  "evaluation_feedback_supplied": false,
+  "ancestor_sha256": "c83b37723d064b63a26f8450532714c2bfd09216aee79cdecd1d68d710b25804",
+  "candidate_sha256": "8602a18f58e1a793b130b7e13d63160cb9d41c067436b8cdec2de381cebe6e89",
+  "source_changed": true,
+  "improvement_elapsed_seconds": 73.13566929200897,
+  "status": "candidate_invoked",
+  "next_action": "inspect",
+  "next_invocation_elapsed_seconds": 38.330209416977596
+}

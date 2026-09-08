@@ -1,0 +1,12 @@
+{
+  "kind": "inspect",
+  "policy": null,
+  "approval_id": null,
+  "note": "Inspect development diagnostics, including stress and message-format variants, mixed-area precedence cases, and deduplication behavior before drafting the routing policy.",
+  "usage": {
+    "input_tokens": 23136,
+    "output_tokens": 133,
+    "model_calls": null,
+    "source": "provider_reported"
+  }
+}
