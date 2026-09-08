@@ -1,0 +1,6 @@
+#!/bin/sh
+# Keep dependencies off removable filesystems that generate AppleDouble wheel entries.
+set -eu
+project_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+exec env UV_PROJECT_ENVIRONMENT="${FDEBENCH_ENV:-${XDG_CACHE_HOME:-$HOME/.cache}/fdebench/venv}" \
+  uv run --project "$project_dir" fdebench "$@"

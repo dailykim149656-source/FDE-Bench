@@ -1,0 +1,7 @@
+{
+  "systems": [
+    {"name": "initial-control", "model": "none", "agent": "scripted-control-v0",
+     "harness": "json-actions-v1", "source": "agents/control.py", "kind": "scripted_control"}
+  ],
+  "seeds": [201, 202]
+}

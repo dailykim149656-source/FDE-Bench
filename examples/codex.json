@@ -1,0 +1,9 @@
+{
+  "systems": [
+    {"name": "codex-agent", "model": "configured-default", "agent": "fde-instructions-v1",
+     "harness": "codex-json-actions-v1", "source": "agents/codex.md", "kind": "model_backed",
+     "backend": "codex", "limits": {"max_actions": 10, "max_replays": 2,
+       "timeout_seconds": 120.0, "max_output_bytes": 131072}}
+  ],
+  "seeds": [301]
+}

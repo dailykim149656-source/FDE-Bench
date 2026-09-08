@@ -1,0 +1,9 @@
+{
+  "systems": [
+    {"name": "baseline-control", "model": "none", "agent": "manual-control-v1",
+     "harness": "python-json-actions-v1", "source": "agents/control.py", "kind": "scripted_control",
+     "backend": "python", "limits": {"max_actions": 10, "max_replays": 2,
+       "timeout_seconds": 120.0, "max_output_bytes": 131072}}
+  ],
+  "seeds": [301]
+}

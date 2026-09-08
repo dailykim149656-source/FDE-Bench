@@ -1,0 +1,9 @@
+{
+  "systems": [
+    {"name": "baseline-control", "model": "none", "agent": "scripted-control-v0",
+     "harness": "json-actions-v1", "source": "agents/control.py", "kind": "scripted_control"},
+    {"name": "routing-control", "model": "none", "agent": "scripted-router-v1",
+     "harness": "json-actions-v1", "source": "agents/router.py", "kind": "scripted_control"}
+  ],
+  "seeds": [101, 102, 103]
+}
