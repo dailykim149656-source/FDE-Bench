@@ -55,6 +55,8 @@ def evaluate(
                     "backend": spec.backend,
                     "label": spec.harness,
                     "limits": spec.limits.model_dump(mode="json"),
+                    "codex_connection": (spec.codex_connection.model_dump(mode="json")
+                                         if spec.codex_connection else None),
                 }
             )
         ),

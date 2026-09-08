@@ -13,7 +13,7 @@ from typing import Final, assert_never
 
 from pydantic import BaseModel, ConfigDict, JsonValue
 
-from .contracts import Action, AgentRequest, Improvement, Usage
+from .contracts import Action, AgentRequest, CodexConnection, Improvement, Usage
 
 _LOGGER: Final = logging.getLogger(__name__)
 # Names verified against the installed CLI's `features list` and `exec --help`.
@@ -66,7 +66,9 @@ def strict_schema(schema: JsonValue) -> JsonValue:
             assert_never(schema)
 
 
-def prepare(source: Path, request: AgentRequest, model: str) -> tuple[list[str], bytes]:
+def prepare(
+    source: Path, request: AgentRequest, model: str, connection: CodexConnection | None = None
+) -> tuple[list[str], bytes]:
     """Build an isolated CLI request without subprocesses or credential access."""
     executable = shutil.which("codex")
     if executable is None:
@@ -133,6 +135,10 @@ def prepare(source: Path, request: AgentRequest, model: str) -> tuple[list[str],
         argv.extend(("--disable", feature))
     if model and model != "configured-default":
         argv.extend(("--model", model))
+    if connection is not None:
+        argv.extend(("--config", f"openai_base_url={json.dumps(connection.base_url)}"))
+        if connection.model_catalog is not None:
+            argv.extend(("--config", f"model_catalog_json={json.dumps(connection.model_catalog)}"))
     argv.append("-")
     return argv, json.dumps(prompt, ensure_ascii=False).encode()
 

@@ -80,7 +80,8 @@ def evolve(suite_path: Path, output: Path, generations: int) -> dict[str, JsonVa
             start = time.monotonic()
             try:
                 child, _ = invoke(
-                    actor, request, original.limits, backend=original.backend, model=original.model
+                    actor, request, original.limits, backend=original.backend, model=original.model,
+                    codex_connection=original.codex_connection
                 )
                 if not isinstance(child, Improvement):
                     raise TypeError("Improve transport returned an action")

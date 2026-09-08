@@ -1,12 +1,13 @@
 """Strict JSON contracts shared by the environment, runner, and agent subprocesses."""
 
 from typing import Annotated, Literal
+from urllib.parse import urlsplit
 
-from pydantic import BaseModel, ConfigDict, Field, JsonValue
+from pydantic import BaseModel, ConfigDict, Field, JsonValue, field_validator
 
 Queue = Literal["manual", "billing", "access", "security"]
 Phase = Literal["active", "handoff_volume", "handoff_wording"]
-Workflow = Literal["support", "inventory"]
+Workflow = Literal["support", "inventory", "recovery"]
 
 
 class Record(BaseModel):
@@ -31,6 +32,14 @@ class InventoryPolicy(Record):
     deduplication: Literal["none", "event_id", "entity_id"] = "none"
     ordering: Literal["arrival", "revision"] = "arrival"
     write_mode: Literal["absolute", "delta"] = "absolute"
+    state_scope: Literal["process", "durable"] = "process"
+
+
+class RecoveryPolicy(Record):
+    timeout_action: Literal["retry", "query", "stop"] = "retry"
+    retry_key: Literal["same", "new"] = "new"
+    absent_action: Literal["retry", "wait", "stop"] = "retry"
+    query_wait_ticks: Annotated[int, Field(ge=0, le=8)] = 0
     state_scope: Literal["process", "durable"] = "process"
 
 
@@ -82,7 +91,7 @@ class Usage(Record):
 
 class Action(Record):
     kind: Literal["inspect", "configure", "replay", "request_approval", "deploy", "finish"]
-    policy: Policy | InventoryPolicy | None = None
+    policy: Policy | InventoryPolicy | RecoveryPolicy | None = None
     approval_id: str | None = None
     note: Annotated[str, Field(max_length=8000)] = ""
     usage: Usage = Usage()
@@ -109,6 +118,20 @@ class Limits(Record):
     max_output_bytes: Annotated[int, Field(ge=1024, le=1000000)] = 131072
 
 
+class CodexConnection(Record):
+    base_url: str
+    model_catalog: str | None = None
+
+    @field_validator("base_url")
+    @classmethod
+    def public_endpoint(cls, value: str) -> str:
+        url = urlsplit(value)
+        if (url.scheme not in {"http", "https"} or not url.hostname
+                or url.username or url.password or url.query or url.fragment):
+            raise ValueError("Connection must be an HTTP(S) endpoint without credentials or query")
+        return value
+
+
 class SystemSpec(Record):
     name: Annotated[str, Field(pattern=r"^[A-Za-z0-9_-]{1,60}$")]
     model: Annotated[str, Field(min_length=1, max_length=200)]
@@ -118,6 +141,7 @@ class SystemSpec(Record):
     kind: Literal["scripted_control", "model_backed", "external_unverified"]
     backend: Literal["python", "codex"] = "python"
     limits: Limits = Limits()
+    codex_connection: CodexConnection | None = None
 
 
 class Suite(Record):

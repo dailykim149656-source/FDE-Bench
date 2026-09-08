@@ -10,6 +10,7 @@ from pydantic import ValidationError
 from fdebench.artifacts import write_json
 from fdebench.evolution import evolve
 from fdebench.imported import compare_runs
+from fdebench.repeated import run_repeated
 from fdebench.runner import run_suite
 from fdebench.transfer import run_transfer
 
@@ -36,6 +37,11 @@ def main() -> int:
     )
     transfer.add_argument("--registration", type=Path, required=True)
     transfer.add_argument("--out", type=Path, required=True)
+    repeat = commands.add_parser("repeat", help="Run 45 registered independent agent sessions")
+    repeat.add_argument("--registration", type=Path, required=True)
+    repeat.add_argument("--out", type=Path, required=True)
+    repeat.add_argument("--resume", action="store_true",
+                        help="Reuse verified completed sessions; never retry interrupted sessions")
     args = parser.parse_args()
     existed = args.out.exists()
     try:
@@ -43,6 +49,8 @@ def main() -> int:
             result = run_suite(args.suite, args.out)
         elif args.command == "evolve":
             result = evolve(args.suite, args.out, args.generations)
+        elif args.command == "repeat":
+            result = run_repeated(args.registration, args.out, resume=args.resume)
         elif args.command == "transfer":
             result = run_transfer(args.registration, args.out)
         else:

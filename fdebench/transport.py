@@ -18,7 +18,7 @@ from typing import Final, Literal, assert_never
 from pydantic import ValidationError
 
 from . import codex_adapter
-from .contracts import Action, AgentRequest, Improvement, Limits
+from .contracts import Action, AgentRequest, CodexConnection, Improvement, Limits
 
 ISOLATION: Final = "cooperative_local_process"
 
@@ -142,6 +142,7 @@ def invoke(
     *,
     backend: Literal["python", "codex"] = "python",
     model: str = "",
+    codex_connection: CodexConnection | None = None,
 ) -> tuple[Action | Improvement, float]:
     """Execute an exact source snapshot and strictly parse one mode-specific reply.
 
@@ -175,7 +176,7 @@ def invoke(
                         env=env,
                     )
                 case "codex":
-                    argv, payload = codex_adapter.prepare(copied, request, model)
+                    argv, payload = codex_adapter.prepare(copied, request, model, codex_connection)
                     env["HOME"] = str(Path.home())
                     env["CODEX_HOME"] = os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))
                     env["PATH"] = str(Path(argv[0]).parent) + os.pathsep + os.defpath

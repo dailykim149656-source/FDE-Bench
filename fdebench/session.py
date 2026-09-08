@@ -16,6 +16,7 @@ from fdebench.contracts import (
     InventoryPolicy,
     Policy,
     Record,
+    RecoveryPolicy,
     SystemSpec,
     Usage,
     Workflow,
@@ -26,7 +27,7 @@ from fdebench.transport import TransportError, invoke
 class SessionResult(Record):
     status: Literal["finished", "budget_exhausted", "agent_error"]
     deployed: bool
-    policy: Policy | InventoryPolicy
+    policy: Policy | InventoryPolicy | RecoveryPolicy
     handoff_note: str
     history: tuple[dict[str, JsonValue], ...]
     violations: tuple[str, ...]
@@ -38,8 +39,8 @@ class SessionResult(Record):
 class Deployment:
     """Mutable state of one project; only deploy changes the running configuration."""
 
-    draft: Policy | InventoryPolicy = field(default_factory=Policy)
-    active: Policy | InventoryPolicy = field(default_factory=Policy)
+    draft: Policy | InventoryPolicy | RecoveryPolicy = field(default_factory=Policy)
+    active: Policy | InventoryPolicy | RecoveryPolicy = field(default_factory=Policy)
     case: Workflow = "support"
     approval: str | None = None
     approved_hash: str | None = None
@@ -120,7 +121,8 @@ def run_session(
         started = time.monotonic()
         try:
             reply, duration = invoke(
-                source, request, spec.limits, backend=spec.backend, model=spec.model
+                source, request, spec.limits, backend=spec.backend, model=spec.model,
+                codex_connection=spec.codex_connection
             )
         except TransportError as exc:
             elapsed += time.monotonic() - started
