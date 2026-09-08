@@ -1,0 +1,138 @@
+{
+  "status": "R0_REFERENCE_REPRODUCED",
+  "recorded_on": "2026-09-08",
+  "metadata_origin": "Recovery annotation created on this date; original package files and replay CLI output are unchanged. This is not the historical execution manifest.",
+  "protocol_version": "0.2",
+  "suite_version": "sha256:f4faf64b00026a5becbac6b29449505bd2d1d25e71287e4ada6b347b97d712e1",
+  "evaluator_version": "sha256:f4faf64b00026a5becbac6b29449505bd2d1d25e71287e4ada6b347b97d712e1",
+  "detector_version": "synthetic-ground-truth-reader@sha256:f4faf64b00026a5becbac6b29449505bd2d1d25e71287e4ada6b347b97d712e1",
+  "case_family_lineage": [],
+  "organization_version": "not_applicable: no organization model",
+  "system_snapshot": "scripted World/Policy fixtures embedded in the versioned source; no AI system",
+  "memory_track": "not_applicable: no agent memory",
+  "resource_envelope": "scripted capacities and token quantities in source; no enforced AI resource envelope",
+  "tariff_version": "synthetic Fraction prices embedded in source; no vendor tariff",
+  "exposure_status": "public_synthetic_reference_fixtures",
+  "claim_scope": "R0_synthetic_arithmetic_and_invariance_fixtures_only",
+  "human_scope": "none",
+  "organization_coverage": "none",
+  "independent_fde_case_families": 0,
+  "unvalidated_dimensions": [
+    "real baseline twin fidelity",
+    "real intervention response and causal attribution",
+    "executable customer deployment and handoff",
+    "real detector calibration",
+    "alternative software implementation equivalence",
+    "human comparison",
+    "FDE construct and external validity"
+  ],
+  "source_path": "r0_reference/original/estimator_reference.py",
+  "recovery_commit": "77131d2ddbee80dc4d76f559e7a23f6b9abd94e6",
+  "historical_git_commit": null,
+  "source_changed": false,
+  "version_bridge_scope": "Same evaluator bytes rerun on another Python/platform; no cross-evaluator or cross-model version bridge is claimed.",
+  "input_archive": {
+    "filename": "FDE_Bench_v0.2_Protocol_and_Reference_Tests.zip",
+    "origin": "user-provided attachment",
+    "sha256": "4a4b7b29b566815f587f7437e5fc48633c31b928917b997b4c66de953bcabf75",
+    "member_sha256": {
+      "FDE_Bench_v0.2_Research_Protocol_KO.md": "183b233607cde9cf8791a8ee761e219d5d8ab21414730cee46b0e687f1121832",
+      "MANIFEST.json": "7006a869b7379b69f40c32fcb771e961de7e9c6b6cc2cb3bdeaf3bcb64db48fa",
+      "README_KO.md": "471b6753bea15f431a140f6bc77e93b8330e8baf88e6a105d076c056525abd4c",
+      "estimator_reference.py": "f4faf64b00026a5becbac6b29449505bd2d1d25e71287e4ada6b347b97d712e1",
+      "results.json": "293707a0a28ef93996d01e357e9c6c7f738af09bfd13bc3a360d6d865f1490f7"
+    },
+    "four_listed_manifest_hashes_match": true,
+    "integrity_scope": "Agreement with the supplied package manifest; not external provenance authentication"
+  },
+  "command": [
+    "python3",
+    "r0_reference/original/estimator_reference.py",
+    "--seeds",
+    "1000",
+    "--out",
+    "r0_reference/results.reproduced.json"
+  ],
+  "working_directory": "repository root",
+  "command_exit_code": 0,
+  "results": {
+    "original": {
+      "path": "r0_reference/original/results.json",
+      "sha256": "293707a0a28ef93996d01e357e9c6c7f738af09bfd13bc3a360d6d865f1490f7",
+      "python_version": "3.13.5",
+      "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+      "runtime_provenance": "reported in original artifact; historical invocation not observed"
+    },
+    "reproduced": {
+      "path": "r0_reference/results.reproduced.json",
+      "sha256": "9c112a90a3009495a5e20fd9525a5880a29d2f752a9d2a9a6cf360d55a6ec6cd",
+      "python_version": "3.14.6",
+      "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+      "runtime_provenance": "CLI executed during recovery"
+    }
+  },
+  "comparison": {
+    "report_field_sets_equal": true,
+    "deterministic_fields_equal": [
+      "artifact",
+      "status",
+      "scope",
+      "source_sha256",
+      "seeds_per_looped_check",
+      "independent_fde_case_families",
+      "tests_run",
+      "failures",
+      "errors",
+      "skips",
+      "demonstrations"
+    ],
+    "test_log_equal_except_duration": true,
+    "changed_fields": [
+      "python_version",
+      "platform",
+      "test_log"
+    ],
+    "ignored_differences": [
+      "python_version",
+      "platform",
+      "test_log elapsed duration only"
+    ],
+    "tests_run": 20,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "demonstrations_equal": true,
+    "canonical_trace_sha256": "b2ca40508258f69b05f5a13795c6a3802e9b4c5ad3822620776cf541bea363e7",
+    "protocol_13_values": {
+      "aa_equal_policy_equal_cost": 0,
+      "boom_naive_before_after": 8000,
+      "boom_paired_noop_contribution": 0,
+      "known_positive_contribution": 39000,
+      "known_harm_contribution": -21000,
+      "durable_minus_fragile_post_handoff_value": 30000
+    },
+    "known_harm_value_evidence": "test_04 at seeds 0..999; also evaluated directly at seed 0 during recovery, not present in original demonstrations object"
+  },
+  "coverage_notes": {
+    "seed_count_argument": 1000,
+    "tests_with_1000_seeds": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "09",
+      "10"
+    ],
+    "test_11_seed_count": 100,
+    "other_tests": "single fixtures or parameter checks; not 1000 seeds each",
+    "test_15": "Identical Policy parameters with different name labels; no distinct software implementations executed.",
+    "numeric_examples": "Synthetic accounting units and scripted interventions; not measured customer effects."
+  },
+  "cli_observations": {
+    "help_exit_code": 0,
+    "zero_seeds_exit_code": 2,
+    "zero_seeds_message": "--seeds must be positive"
+  }
+}

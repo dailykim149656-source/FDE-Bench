@@ -1,0 +1,117 @@
+{
+  "commit_sha": null,
+  "commit_bound_certification": false,
+  "reviews": [
+    {
+      "round": 1,
+      "lane": "quality",
+      "commit_sha": null,
+      "selector_sha256": "00eb9d942a78e073b47a4148ef929458897ddf677559113d8dd25ad544510783",
+      "verdict": "FAIL",
+      "source": "agent:01a07ea4-0897-7b11-970f-542e46912c51",
+      "report": "**FAIL — two correctness blockers reproduced.** No edits or subagents.\n\n- **[P2 blocker] Blank metadata can pass readiness** — [select_case.py:97](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/select_case.py:97), also line 101. In an otherwise complete temporary record, set `source.participant_code`, `source.interview_date`, `scope.system`, or `scope.mutable_surface` to `\" \\t\\n \"`. Each returns `READY_FOR_REVIEW`; expected `INCOMPLETE`. These checks omit `.strip()`.\n\n- **[P2 blocker] Malformed input aborts the entire report** — [select_case.py:185](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/select_case.py:185). Set an artifact path to `\"bad\\u0000name.txt\"`, or supply a JSON integer containing 4,301 digits. Both produce an uncaught `ValueError`, exit **1**, and no JSON report; expected `INVALID`, exit **2**.\n\nRan [self_check.py](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/self_check.py>): **36 checks passed**; selector `--help` and `--json`: passed; nine temporary-input probes confirmed both bugs and exclusion of copied fixtures.\n\nRead both Python files, [root README](</Volumes/Crucial X6/project/FDE-Bench/README.md>), [.gitignore](</Volumes/Crucial X6/project/FDE-Bench/.gitignore>), [intake README](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/README.md>), [review form](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/case_review.md>), [template](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/cases/_template.json>), and [eligible](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/fixtures/eligible_shape.json>)/[ineligible](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/fixtures/ineligible_opinion_only.json>) fixtures. Also hashed [contact list](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/contact_list.md>), [interview script](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/interview_script.md>), and [outreach](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/outreach.md>).\n\nSelector SHA256 matches. Aggregate manifest hash was not reproduced with tested serializations; its encoding was unspecified. No commit-bound certification is possible."
+    },
+    {
+      "round": 1,
+      "lane": "goal",
+      "commit_sha": null,
+      "selector_sha256": "00eb9d942a78e073b47a4148ef929458897ddf677559113d8dd25ad544510783",
+      "verdict": "FAIL",
+      "source": "agent:01a07ea4-0989-7530-abea-3a4c1e68579c",
+      "report": "**FAIL — one completeness blocker.**\n\n- **[P2 blocker] Whitespace bypasses mandatory metadata checks** at [select_case.py:97](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/select_case.py:97) and [line 101](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/select_case.py:101). Reproduction: in an otherwise ready temporary record, set any of `source.participant_code`, `source.interview_date`, `scope.system`, or `scope.mutable_surface` to `\"   \"`. Result: `READY_FOR_REVIEW`, no missing-field reason. Setting the same field to `\"\"` correctly returns `INCOMPLETE`. This bypasses the promised minimum-record check.\n\nOther lane checks passed: no automatic selection/certification; R1/R2 separation; selection required before twin implementation; historical failures retained; Case 2 deferred; baseline fit distinguished from causal validity. Copied fixtures remained excluded.\n\nExecuted `self_check.py` **36/36**, selector `--help`/`--json`, and temporary fixture/completeness probes. No repository edits or subagents.\n\nRead: root `.gitignore`, `README.md`; under [r1_fieldwork](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork>): `README.md`, `case_review.md`, `interview_script.md`, `outreach.md`, `contact_list.md`, `select_case.py`, `self_check.py`, `cases/_template.json`, and both fixture JSON files. Inventory also hashed existing selector bytecode; archive contents were not read.\n\nSelector SHA matches the supplied hash. My source-manifest digest was stable at `7265fed5bab4077fc0e8178a32a48357639dc48145ef80dfb48322549d495a8e`; the supplied aggregate was not reproduced, so aggregate snapshot identity remains unverified. No commit-bound certification is possible.\n\nOptional suggestions: none."
+    },
+    {
+      "round": 1,
+      "lane": "security",
+      "commit_sha": null,
+      "selector_sha256": "00eb9d942a78e073b47a4148ef929458897ddf677559113d8dd25ad544510783",
+      "verdict": "FAIL",
+      "source": "agent:01a07ea4-10b7-7922-b448-049ed171a077",
+      "report": "**FAIL — two blockers reproduced on Python 3.14.6.**\n\n- **[P2 blocker] Unreadable case directories silently report success** — [select_case.py:180](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/select_case.py:180>). Reproduction: create a temporary cases directory containing a template copy, apply `chmod 000`, then run `--cases <directory> --json`. Actual: exit **0**, `records: []`, no error. Directory enumeration failure becomes indistinguishable from an empty intake.\n- **[P2 blocker] Invalid artifact paths abort the entire report** — [select_case.py:133](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/select_case.py:133>). Reproduction: add an otherwise well-formed artifact to a temporary template copy with JSON path `\"bad\\u0000path\"`, then run `--json`. Actual: uncaught `ValueError`, exit **1**, no JSON report. The exception handler at line 185 misses this input error; it should produce `INVALID`/exit **2**.\n\nExecuted: `self_check.py` (**36 passed**), selector `--help` and default `--json`, plus temporary permission, path, symlink, malformed-JSON redaction, and relocated-fixture probes. Evidence traversal and external evidence symlinks were rejected; the synthetic private-content sentinel was not disclosed.\n\nRead: [.gitignore](</Volumes/Crucial X6/project/FDE-Bench/.gitignore>), [root README](</Volumes/Crucial X6/project/FDE-Bench/README.md>), [intake README](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/README.md>), [case_review.md](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/case_review.md>), selector, [self_check.py](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/self_check.py>), [_template.json](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/cases/_template.json>), and both [eligible](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/fixtures/eligible_shape.json>)/[opinion-only](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/fixtures/ineligible_opinion_only.json>) fixtures. Additionally hashed contact_list.md, interview_script.md and outreach.md; searched interview_script.md.\n\nSelector SHA256 matched. All 12 source files remained unchanged. The supplied aggregate manifest hash was not reproduced; its serialization was unspecified. No commit-bound certification. No edits or subagents; temporary inputs removed."
+    },
+    {
+      "round": 1,
+      "lane": "context",
+      "commit_sha": null,
+      "selector_sha256": "00eb9d942a78e073b47a4148ef929458897ddf677559113d8dd25ad544510783",
+      "verdict": "PASS",
+      "source": "agent:01a07ea4-0d58-7a33-9cf3-d7d5d90b9e3a",
+      "report": "**PASS — current-file review. No material blockers found in this lane.**\n\nSelection avoids success-only filtering; baseline fit does not certify intervention validity; holdout leakage rules are explicit; source selection precedes implementation; R1, human R2, and deferred Case 2 remain separate.\n\nValidation: 36 CLI regressions passed; `--help` and empty `--json` exited 0. Five additional temporary cases confirmed failure histories remain reviewable, unknown/impossible reconstruction differs, and copied fixtures remain excluded. No repository edits or subagents.\n\nRead:\n\n- [README](/Volumes/Crucial%20X6/project/FDE-Bench/README.md), [fieldwork README](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/README.md), [interview script](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/interview_script.md), [case review](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/case_review.md), [template](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/cases/_template.json).\n- [Selector](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/select_case.py), [self-check](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/self_check.py), [outreach](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/outreach.md), [contact list](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/contact_list.md), both [shape](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/fixtures/eligible_shape.json) and [opinion](/Volumes/Crucial%20X6/project/FDE-Bench/r1_fieldwork/fixtures/ineligible_opinion_only.json) fixtures, [.gitignore](/Volumes/Crucial%20X6/project/FDE-Bench/.gitignore).\n- Relevant [archive v0.1](/Volumes/Crucial%20X6/project/FDE-Bench/archive/FDE_Bench_v0.1_Research_Protocol_KO.md) and [v0.2](/Volumes/Crucial%20X6/project/FDE-Bench/archive/FDE_Bench_v0.2_Research_Protocol_KO.md) passages. Generated bytecode was hashed; fixture AppleDouble metadata was inadvertently read by the temporary harness, then excluded.\n\nProvenance limitation: selector SHA-256 matches. The supplied aggregate manifest digest was not reproduced; its serialization was unspecified. This verdict covers inspected files, with **no commit-bound certification**.\n\nOptional: provide the exact manifest-generation command for reproducible snapshot verification."
+    },
+    {
+      "round": 1,
+      "lane": "qa",
+      "commit_sha": null,
+      "selector_sha256": "00eb9d942a78e073b47a4148ef929458897ddf677559113d8dd25ad544510783",
+      "verdict": "FAIL",
+      "source": "agent:01a07ea4-0ad7-7e23-96bc-7d3ef2bbab2f",
+      "report": "**FAIL — two P2 blockers.**\n\n- **Malformed evidence path crashes the entire scan:** [select_case.py:133](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/select_case.py:133>). Reproduction: set `artifacts[0].path` to `\"bad\\u0000name.txt\"` in a temporary record and run with `--json`. Actual: uncaught `ValueError`, exit **1**, no report; healthy sibling records disappear too. Expected: that record becomes `INVALID`, exit **2**, remaining records reported.\n- **Whitespace bypasses required metadata:** [select_case.py:97](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/select_case.py:97>) and line 101. Reproduction: in an otherwise ready temporary record, replace `source.participant_code`, `source.interview_date`, `scope.system`, or `scope.mutable_surface` individually with `\" \\t\\n \"`. Each incorrectly remains `READY_FOR_REVIEW`; expected `INCOMPLETE`.\n\nExecuted: existing **36/36** regressions; **90/96** independent scenarios passed, with six failures covering those two defects. `--help` and default `--json` returned 0. Missing/unreadable evidence, stale hashes, duplicate IDs, wrong types, and copied fixture isolation behaved correctly.\n\nRead: [selector](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/select_case.py>), [self-check](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/self_check.py>), [root README](</Volumes/Crucial X6/project/FDE-Bench/README.md>), [intake README](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/README.md>), [review form](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/case_review.md>), [template](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/cases/_template.json>), both [fixtures](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/fixtures>), and [.gitignore](</Volumes/Crucial X6/project/FDE-Bench/.gitignore>). Other non-archive source files were hashed only; one fixture metadata file failed decoding during the initial harness attempt.\n\nNo edits or subagents; temporary inputs removed. Selector SHA matched. **Snapshot limitation:** concurrent changes modified `self_check.py` and added `review_results.json`; the supplied whole-source digest remains unverified. No commit-bound certification."
+    },
+    {
+      "round": 2,
+      "lane": "runtime_debugging",
+      "commit_sha": null,
+      "snapshot_sha256": "f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20",
+      "selector_sha256": "49e2ad8cb2434f1b04dabd0957cb15e287e87add2db3eaa6c01935257aa0fe0a",
+      "verdict": "PASS",
+      "source": "parent debugger CLI inspection, current snapshot verification; functions.exec cell outputs",
+      "report": "Observed scan() return [] for actual empty cases directory. CLI emitted selected_case null and NOT_ASSESSED for fidelity/count with exit0. Regression checks cover malformed paths, whitespace, directory permissions and healthy sibling preservation. No debugger source modifications."
+    },
+    {
+      "round": 2,
+      "lane": "context",
+      "commit_sha": null,
+      "snapshot_sha256": "f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20",
+      "verdict": "PASS",
+      "source": "agent:01a07ea8-4e2f-72c3-aae2-fee6c96f8f61",
+      "report": "**PASS — context lane. No material blockers.**\n\n[Root README](</Volumes/Crucial X6/project/FDE-Bench/README.md>), [intake README](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/README.md>), [interview](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/interview_script.md>), [case review](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/case_review.md>), and [template](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/cases/_template.json>) remain consistent: human selection precedes implementation; R1/R2 and deferred Case 2 stay separate; failure histories remain eligible; readiness and baseline fit do not establish intervention validity.\n\n- **46 self-checks passed**; `--help` and `--json` exited 0. Actual intake remains empty; no case selected.\n- All **13 listed file hashes** and the canonical aggregate verified:\n  `f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20`\n- Selector verified:\n  `49e2ad8cb2434f1b04dabd0957cb15e287e87add2db3eaa6c01935257aa0fe0a`\n\nHashes establish snapshot identity, not evidence truth. No source edits, subagents, or commit certification."
+    },
+    {
+      "round": 2,
+      "lane": "goal",
+      "commit_sha": null,
+      "snapshot_sha256": "f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20",
+      "verdict": "PASS",
+      "source": "agent:01a07ea8-4da4-7353-9238-735c32ed58b4",
+      "report": "**PASS — goal lane complete; no material blockers.**\n\n- [Selector](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/select_case.py:97>): whitespace-only metadata correctly returns `INCOMPLETE`. Malformed inputs return `INVALID`/exit 2 while preserving healthy siblings; copied fixtures remain excluded.\n- [Review contract](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/case_review.md>): R1/R2 separation, selection before twin implementation, baseline validation before AI testing, Case 1 scope and two handoff shocks, deferred Case 2, and failure-history retention are preserved. Readiness and baseline fit do not certify intervention effects.\n- Verification: **46 CLI checks passed**, `--help`/`--json` passed, and nine mixed temporary records behaved correctly. Actual cases remain **0**.\n\nAll **13 listed per-file hashes**, the canonical aggregate `f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20`, and selector `49e2ad8cb2434f1b04dabd0957cb15e287e87add2db3eaa6c01935257aa0fe0a` match, including after verification.\n\nNo source edits or subagents. Hash agreement establishes file identity, not evidence truth; no commit certification."
+    },
+    {
+      "round": 2,
+      "lane": "quality",
+      "commit_sha": null,
+      "snapshot_sha256": "f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20",
+      "verdict": "PASS",
+      "source": "agent:01a07ea8-4c8e-75a2-83e5-d6a3236b241a",
+      "report": "**PASS — no material quality blockers.**\n\nRead [selector](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/select_case.py>) and [self-check](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/self_check.py>). All **46 self-checks**, **11 independent temporary-input probes**, and CLI `--help`/`--json` checks passed.\n\nConfirmed whitespace becomes `INCOMPLETE`; unreadable directories return `INVALID`/exit 2; NUL paths and oversized integers produce redacted errors while preserving healthy siblings. Underscore records are scanned; copied fixtures remain excluded.\n\nAll **13 listed hashes verified before and after**, including the canonical aggregate:\n\n- Snapshot: `f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20`\n- Selector: `49e2ad8cb2434f1b04dabd0957cb15e287e87add2db3eaa6c01935257aa0fe0a`\n\nActual cases remain **0**. Readiness/hash checks do not establish evidence authenticity or scientific validity. No edits, subagents, or commit certification."
+    },
+    {
+      "round": 2,
+      "lane": "qa",
+      "commit_sha": null,
+      "snapshot_sha256": "f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20",
+      "verdict": "PASS",
+      "source": "agent:01a07ea8-4d2b-7f51-ab67-705af4b76ad0",
+      "report": "**PASS — qa. No material blockers.**\n\n- [self_check.py](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/self_check.py>): **46 checks passed**; CLI `--help` passed.\n- Independent [selector](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/select_case.py>) probes passed: four whitespace-only fields → `INCOMPLETE`; actual `chmod 000` denial → `INVALID`/exit 2; NUL path → redacted `INVALID`/exit 2 while preserving the healthy sibling. Permission denial was verified in system temporary storage.\n\nAll **13 listed file hashes**, canonical aggregate, and selector hash matched before and after testing:\n\n```text\nsnapshot f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20\nselector 49e2ad8cb2434f1b04dabd0957cb15e287e87add2db3eaa6c01935257aa0fe0a\n```\n\nNo source edits or subagents; temporary inputs removed. Hash agreement confirms byte identity only, not evidence authenticity or scientific validation. Actual cases remain **0**."
+    },
+    {
+      "round": 2,
+      "lane": "security",
+      "commit_sha": null,
+      "snapshot_sha256": "f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20",
+      "verdict": "PASS",
+      "source": "agent:01a07ea8-4f07-7cd3-a7c8-4b97c185abf4",
+      "report": "**PASS — no material security blocker.**\n\n[Self-check](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/self_check.py>): **46 passed**. Another **16 temporary security probes** passed against [selector](</Volumes/Crucial X6/project/FDE-Bench/r1_fieldwork/select_case.py>): chmod failures return `INVALID`/exit 2; NUL and malformed inputs remain redacted and preserve healthy siblings; traversal and external evidence symlinks are rejected. CLI help and JSON/text output passed.\n\nAll **13 listed file hashes** verified before and after, including:\n- Snapshot: `f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20`\n- Selector: `49e2ad8cb2434f1b04dabd0957cb15e287e87add2db3eaa6c01935257aa0fe0a`\n\nSource unchanged; temporary inputs removed. No edits, network, subagents, or commit certification. Hash identity does not establish evidence authenticity or scientific validity."
+    }
+  ],
+  "current_review_status": "HISTORICAL_SNAPSHOT_ONLY",
+  "claim_scope": "agent_review_of_the_recorded_intake_snapshot_only",
+  "scope_note": "2026-09-08: research and outreach documents have changed since the reviewed snapshot. Prior PASS verdicts do not certify those changes, R0 results, evidence authenticity, or benchmark validity. Python sources and intake schema are unchanged.",
+  "reviewed_snapshot_sha256": "f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20",
+  "verification_at_reviewed_snapshot": {
+    "cli_regression_checks": 46,
+    "actual_interviews": 0,
+    "implemented_case_families": 0,
+    "scientific_validity": "NOT_ASSESSED",
+    "commit_sha": null
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "artifact": "FDE-Bench v0.2 estimator reference checks",
+  "status": "passed",
+  "scope": "synthetic arithmetic and invariance fixtures only; no FDE validity, LLM or human comparison",
+  "python_version": "3.14.6",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "source_sha256": "f4faf64b00026a5becbac6b29449505bd2d1d25e71287e4ada6b347b97d712e1",
+  "seeds_per_looped_check": 1000,
+  "independent_fde_case_families": 0,
+  "tests_run": 20,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "test_log": "test_01_aa_equal_policy_equal_cost_exact_zero (__main__.ReferenceChecks.test_01_aa_equal_policy_equal_cost_exact_zero) ... ok\ntest_02_boom_without_intervention_is_not_attributed (__main__.ReferenceChecks.test_02_boom_without_intervention_is_not_attributed) ... ok\ntest_03_known_positive_effect_analytic (__main__.ReferenceChecks.test_03_known_positive_effect_analytic) ... ok\ntest_04_known_harm_is_negative_not_clipped (__main__.ReferenceChecks.test_04_known_harm_is_negative_not_clipped) ... ok\ntest_05_no_demand_no_capacity_value (__main__.ReferenceChecks.test_05_no_demand_no_capacity_value) ... ok\ntest_06_handoff_collapse_changes_outcome (__main__.ReferenceChecks.test_06_handoff_collapse_changes_outcome) ... ok\ntest_07_costly_noop_is_not_forced_to_zero (__main__.ReferenceChecks.test_07_costly_noop_is_not_forced_to_zero) ... ok\ntest_08_dashboard_inflation_cannot_change_score (__main__.ReferenceChecks.test_08_dashboard_inflation_cannot_change_score) ... ok\ntest_09_positive_control_known_violation_detected (__main__.ReferenceChecks.test_09_positive_control_known_violation_detected) ... ok\ntest_10_negative_control_approved_change_not_flagged (__main__.ReferenceChecks.test_10_negative_control_approved_change_not_flagged) ... ok\ntest_11_extra_queries_cannot_shift_external_events (__main__.ReferenceChecks.test_11_extra_queries_cannot_shift_external_events) ... ok\ntest_12_capability_is_tariff_independent_for_fixed_trace (__main__.ReferenceChecks.test_12_capability_is_tariff_independent_for_fixed_trace) ... ok\ntest_13_economic_order_can_reverse_with_price (__main__.ReferenceChecks.test_13_economic_order_can_reverse_with_price) ... ok\ntest_14_service_compute_after_handoff_is_counted (__main__.ReferenceChecks.test_14_service_compute_after_handoff_is_counted) ... ok\ntest_15_equivalent_implementation_labels_score_equally (__main__.ReferenceChecks.test_15_equivalent_implementation_labels_score_equally) ... ok\ntest_16_normalization_can_reverse_rank (__main__.ReferenceChecks.test_16_normalization_can_reverse_rank) ... ok\ntest_17_imperfect_detector_weakens_risk_bound (__main__.ReferenceChecks.test_17_imperfect_detector_weakens_risk_bound) ... ok\ntest_18_unknown_sensitivity_refuses_risk_claim (__main__.ReferenceChecks.test_18_unknown_sensitivity_refuses_risk_claim) ... ok\ntest_19_invalid_scales_rejected (__main__.ReferenceChecks.test_19_invalid_scales_rejected) ... ok\ntest_20_joint_error_budget_for_detector_calibration (__main__.ReferenceChecks.test_20_joint_error_budget_for_detector_calibration) ... ok\n\n----------------------------------------------------------------------\nRan 20 tests in 0.873s\n\nOK\n",
+  "demonstrations": {
+    "units": "synthetic accounting units; not real money or model performance",
+    "boom_naive_before_after": 8000,
+    "boom_paired_noop_contribution": 0,
+    "known_positive_contribution": 39000,
+    "known_positive_analytic_target": 39000,
+    "durable_post_handoff_value": 180000,
+    "fragile_post_handoff_value": 150000,
+    "known_risk_example_only": {
+      "n_zero_detections": 300,
+      "perfect_detector_upper_95": 0.009936081944457711,
+      "known_sensitivity_0_8_upper_95": 0.012420102430572138,
+      "hypothetical_300_of_300_positive_controls_sensitivity_lower_97_5": 0.9877790253057065,
+      "joint_at_least_95_upper_using_alpha_split": 0.01237217472856472,
+      "warning": "Calibration distribution must cover actual violations; untested types remain unbounded."
+    },
+    "example_canonical_trace": {
+      "operational_value": 240000,
+      "noncompute_cost": 1000,
+      "deployment_tokens": 0,
+      "service_tokens": 0,
+      "active_value": 60000,
+      "post_handoff_value": 180000,
+      "dashboard_value": 240000,
+      "violations": [],
+      "canonical_rows": [
+        [
+          0,
+          152,
+          120,
+          120,
+          12000
+        ],
+        [
+          1,
+          164,
+          120,
+          120,
+          12000
+        ],
+        [
+          2,
+          150,
+          120,
+          120,
+          12000
+        ],
+        [
+          3,
+          149,
+          120,
+          120,
+          12000
+        ],
+        [
+          4,
+          160,
+          120,
+          120,
+          12000
+        ],
+        [
+          5,
+          152,
+          120,
+          120,
+          12000
+        ],
+        [
+          6,
+          154,
+          120,
+          120,
+          12000
+        ],
+        [
+          7,
+          143,
+          120,
+          120,
+          12000
+        ],
+        [
+          8,
+          199,
+          120,
+          120,
+          12000
+        ],
+        [
+          9,
+          178,
+          120,
+          120,
+          12000
+        ],
+        [
+          10,
+          173,
+          120,
+          120,
+          12000
+        ],
+        [
+          11,
+          145,
+          120,
+          120,
+          12000
+        ],
+        [
+          12,
+          161,
+          120,
+          120,
+          12000
+        ],
+        [
+          13,
+          199,
+          120,
+          120,
+          12000
+        ],
+        [
+          14,
+          197,
+          120,
+          120,
+          12000
+        ],
+        [
+          15,
+          155,
+          120,
+          120,
+          12000
+        ],
+        [
+          16,
+          191,
+          120,
+          120,
+          12000
+        ],
+        [
+          17,
+          171,
+          120,
+          120,
+          12000
+        ],
+        [
+          18,
+          161,
+          120,
+          120,
+          12000
+        ],
+        [
+          19,
+          193,
+          120,
+          120,
+          12000
+        ]
+      ],
+      "canonical_sha256": "b2ca40508258f69b05f5a13795c6a3802e9b4c5ad3822620776cf541bea363e7"
+    }
+  }
+}

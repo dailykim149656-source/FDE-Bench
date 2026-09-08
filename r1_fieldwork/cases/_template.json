@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "id": "case-anon-001",
+  "status": "draft",
+  "source": {
+    "participant_code": "",
+    "interview_date": "",
+    "origin": "self_report"
+  },
+  "scope": {
+    "system": "",
+    "approval_paths": null,
+    "mutable_surface": ""
+  },
+  "baseline": {
+    "reconstructable": null,
+    "reason": "",
+    "runbook_ids": [],
+    "preperiod_ids": [],
+    "workload_ids": [],
+    "validation_plan_ids": []
+  },
+  "sections": {
+    "initial_state": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "pi0_evidence": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "intervention": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "deployment_adoption": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "outcome": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "handoff": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "external_shocks": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "no_intervention": {
+      "summary": "",
+      "evidence_ids": []
+    }
+  },
+  "artifacts": []
+}

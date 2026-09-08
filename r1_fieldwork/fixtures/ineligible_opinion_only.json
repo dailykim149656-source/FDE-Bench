@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "id": "fixture-opinion-only",
+  "status": "fixture",
+  "source": {
+    "participant_code": "",
+    "interview_date": "",
+    "origin": "synthetic"
+  },
+  "scope": {
+    "system": "",
+    "approval_paths": null,
+    "mutable_surface": ""
+  },
+  "baseline": {
+    "reconstructable": null,
+    "reason": "",
+    "runbook_ids": [],
+    "preperiod_ids": [],
+    "workload_ids": [],
+    "validation_plan_ids": []
+  },
+  "sections": {
+    "initial_state": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "pi0_evidence": {
+      "summary": "주관적 회고만 있는 합성 예시.",
+      "evidence_ids": []
+    },
+    "intervention": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "deployment_adoption": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "outcome": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "handoff": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "external_shocks": {
+      "summary": "",
+      "evidence_ids": []
+    },
+    "no_intervention": {
+      "summary": "",
+      "evidence_ids": []
+    }
+  },
+  "artifacts": []
+}

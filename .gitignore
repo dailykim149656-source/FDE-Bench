@@ -6,3 +6,4 @@ r1_fieldwork/private_evidence/
 __pycache__/
 *.py[cod]
 .ruff_cache/
+r0_reference/results.local.json

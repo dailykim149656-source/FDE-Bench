@@ -1,0 +1,20 @@
+{
+  "algorithm": "SHA256(json.dumps(files, sort_keys=True, separators=(comma,colon), ensure_ascii=True).encode(UTF-8))",
+  "snapshot_sha256": "f8e64504b77f6a7467c07f4b1ecc93a64047916a6aaf6b9881a3b518a291ec20",
+  "commit_sha": null,
+  "files": {
+    ".gitignore": "136681aef605631bb8e90d1468e5dd2db7366a578a9f11379aca724c071fbcdd",
+    "README.md": "8992ed603f2273447f824cf0e5ce56f12a64fd474dde4774c7d48f363f466f59",
+    "r1_fieldwork/README.md": "88ac778b20d1e94e37e318a05c46b456f309c0e024134ad1ea521ecf2c16d5eb",
+    "r1_fieldwork/case_review.md": "9294a8ff624ba04627149e1c6f3ac488e822d62cae53c8338670bc518689a4cd",
+    "r1_fieldwork/cases/_template.json": "2dc9e88aaebc0f9e52a4c85630abd93efeff5e814cac5fc82f4630cc12eb291d",
+    "r1_fieldwork/contact_list.md": "a2b118bb430cc4a8ebbbd5fd0f8cb327e7f7ce051d1efdac2055e20f06a956ac",
+    "r1_fieldwork/fixtures/eligible_shape.json": "4765182fd6884dada35cb3325ec9bd09a09d9fd4b12565b530488e7662125824",
+    "r1_fieldwork/fixtures/ineligible_opinion_only.json": "f0bce897f4ca340c38a8faf62d63a6162f6d015e0ca55df1be8e7a9765cd6941",
+    "r1_fieldwork/improvement_report.md": "5cc196956203affb05882e3321e0e9aa45a99a1eb03d9c412fb6ad4f180c9f6c",
+    "r1_fieldwork/interview_script.md": "ae884c490d5f7a2208d5ddf78d190a100156e7a685ebd0b436932eda33e5fbe0",
+    "r1_fieldwork/outreach.md": "0afbec99c646127c15a498a103a1dc5e5362b7d65b4d748e855635e38b3322ae",
+    "r1_fieldwork/select_case.py": "49e2ad8cb2434f1b04dabd0957cb15e287e87add2db3eaa6c01935257aa0fe0a",
+    "r1_fieldwork/self_check.py": "87c23764ba04fab7e607f5961fe80281f4971de8a9ce3e1142a94775feaa2a1e"
+  }
+}
