@@ -1,0 +1,23 @@
+{
+  "case_data_provided": false,
+  "rows": [
+    {
+      "probe": 0,
+      "status": "transport_error",
+      "kind": "timeout",
+      "elapsed_seconds": 120.15374212496681
+    },
+    {
+      "probe": 1,
+      "status": "transport_error",
+      "kind": "timeout",
+      "elapsed_seconds": 120.1822595000267
+    },
+    {
+      "probe": 2,
+      "status": "transport_error",
+      "kind": "timeout",
+      "elapsed_seconds": 120.1786434170208
+    }
+  ]
+}

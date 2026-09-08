@@ -1,0 +1,288 @@
+{
+  "experiment": "grok45-v1",
+  "registered_at_utc": "2026-09-08T06:30:49.384908+00:00",
+  "model": "xai/grok-4.6",
+  "backend": "codex",
+  "cases": [
+    "support",
+    "inventory",
+    "recovery"
+  ],
+  "repetitions": 5,
+  "evaluation_seeds": [
+    9101,
+    9102,
+    9103,
+    9104,
+    9105
+  ],
+  "arms": [
+    {
+      "name": "ancestor",
+      "source": "ancestor.source",
+      "sha256": "c83b37723d064b63a26f8450532714c2bfd09216aee79cdecd1d68d710b25804"
+    },
+    {
+      "name": "source_revised",
+      "source": "source_revised.source",
+      "sha256": "8602a18f58e1a793b130b7e13d63160cb9d41c067436b8cdec2de381cebe6e89"
+    },
+    {
+      "name": "neutral",
+      "source": "neutral.source",
+      "sha256": "e9bdcf20dec76b96ec96c9334e47353497eca2fa6a99e1a7b059eee8c8f9b75f"
+    }
+  ],
+  "session_order": [
+    [
+      "support",
+      "ancestor",
+      4
+    ],
+    [
+      "inventory",
+      "neutral",
+      2
+    ],
+    [
+      "support",
+      "source_revised",
+      1
+    ],
+    [
+      "support",
+      "source_revised",
+      5
+    ],
+    [
+      "recovery",
+      "source_revised",
+      1
+    ],
+    [
+      "inventory",
+      "neutral",
+      4
+    ],
+    [
+      "support",
+      "neutral",
+      1
+    ],
+    [
+      "inventory",
+      "ancestor",
+      3
+    ],
+    [
+      "recovery",
+      "source_revised",
+      2
+    ],
+    [
+      "support",
+      "neutral",
+      5
+    ],
+    [
+      "inventory",
+      "source_revised",
+      1
+    ],
+    [
+      "recovery",
+      "neutral",
+      5
+    ],
+    [
+      "inventory",
+      "neutral",
+      1
+    ],
+    [
+      "support",
+      "ancestor",
+      5
+    ],
+    [
+      "recovery",
+      "source_revised",
+      3
+    ],
+    [
+      "inventory",
+      "ancestor",
+      4
+    ],
+    [
+      "inventory",
+      "source_revised",
+      2
+    ],
+    [
+      "support",
+      "ancestor",
+      2
+    ],
+    [
+      "support",
+      "ancestor",
+      3
+    ],
+    [
+      "recovery",
+      "neutral",
+      1
+    ],
+    [
+      "recovery",
+      "neutral",
+      2
+    ],
+    [
+      "inventory",
+      "source_revised",
+      4
+    ],
+    [
+      "recovery",
+      "source_revised",
+      4
+    ],
+    [
+      "recovery",
+      "source_revised",
+      5
+    ],
+    [
+      "inventory",
+      "source_revised",
+      5
+    ],
+    [
+      "recovery",
+      "ancestor",
+      4
+    ],
+    [
+      "support",
+      "source_revised",
+      2
+    ],
+    [
+      "inventory",
+      "ancestor",
+      5
+    ],
+    [
+      "inventory",
+      "neutral",
+      3
+    ],
+    [
+      "recovery",
+      "ancestor",
+      5
+    ],
+    [
+      "recovery",
+      "ancestor",
+      2
+    ],
+    [
+      "support",
+      "neutral",
+      4
+    ],
+    [
+      "recovery",
+      "ancestor",
+      3
+    ],
+    [
+      "support",
+      "source_revised",
+      3
+    ],
+    [
+      "recovery",
+      "ancestor",
+      1
+    ],
+    [
+      "support",
+      "neutral",
+      2
+    ],
+    [
+      "support",
+      "ancestor",
+      1
+    ],
+    [
+      "inventory",
+      "ancestor",
+      2
+    ],
+    [
+      "recovery",
+      "neutral",
+      3
+    ],
+    [
+      "inventory",
+      "neutral",
+      5
+    ],
+    [
+      "recovery",
+      "neutral",
+      4
+    ],
+    [
+      "support",
+      "source_revised",
+      4
+    ],
+    [
+      "inventory",
+      "source_revised",
+      3
+    ],
+    [
+      "support",
+      "neutral",
+      3
+    ],
+    [
+      "inventory",
+      "ancestor",
+      1
+    ]
+  ],
+  "max_parallel_sessions": 3,
+  "limits": {
+    "max_actions": 10,
+    "max_replays": 2,
+    "timeout_seconds": 120.0,
+    "max_output_bytes": 131072
+  },
+  "codex_connection": {
+    "base_url": "http://127.0.0.1:10100/v1",
+    "model_catalog": "/Volumes/Crucial X6/project/FDE-Bench/experiments/grok45-v1/model-catalog.json"
+  },
+  "model_catalog_sha256": "64e8b240035f4512e500f05b1c3b044c5b75783b04fa23f6badd5a91f9325e49",
+  "design": {
+    "mechanisms": 3,
+    "independent_customer_cases": 0,
+    "new_mechanism": "ambiguous external effects, status visibility delays, timeout and restart composition",
+    "instruction_freeze": "unchanged prior experiment texts; target implementer cannot read them",
+    "replication_unit": "fresh agent session; final seeds are nested policy workload replicates",
+    "analysis": "per-session raw outcomes then condition mean/range/sample SD; no cross-case score or p-values",
+    "selection": "all 45 registered sessions retained including errors; no retries selected for quality; all policies freeze before final eval",
+    "fault_controls": "reference successful policy and plausible failing policies checked before model calls",
+    "ceiling_result": "retain all-success or all-failure; no tuning target to obtain desired discrimination",
+    "isolation": "cooperative local adapter, not adversarial sandbox",
+    "provider": "OpenCodex local xai OAuth route; model slug not immutable provider snapshot"
+  }
+}

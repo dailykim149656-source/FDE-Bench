@@ -2,11 +2,29 @@
 
 An executable research prototype for evaluating how AI systems diagnose, configure, deploy, and hand off changes in unfamiliar operational workflows.
 
-**Current scope: two authored synthetic mechanisms, zero real customer case families.** The benchmark records transaction outcomes rather than grading persuasive answers. It does not establish AGI, human FDE replacement, or recursive improvement gains.
+**Current scope: three authored synthetic mechanisms, zero real customer case families.** The benchmark records transaction outcomes rather than grading persuasive answers. It does not establish AGI, human FDE replacement, or recursive improvement gains.
 
 [한국어 프로젝트 설명](README_KO.md) · [Evaluation methodology](EVALUATION.md) · [Transfer experiment report (한국어)](experiments/transfer-v1/REPORT.md)
 
-## Latest experiment: frozen instructions on a new mechanism
+## Latest results: 45 repeated Grok 4.6 sessions
+
+Using `xai/grok-4.6` through OpenCodex, we ran three frozen instruction sets on three mechanisms, with five fresh agent sessions per condition. All policies froze before 225 final workload evaluations.
+
+| Case | Ancestor | Source-derived revision | Neutral |
+|---|---:|---:|---:|
+| Support routing | 2/5 | 0/5 | 0/5 |
+| Inventory reconciliation | 3/5 | 4/5 | 4/5 |
+| External-effect recovery | 2/5 | 2/5 | 2/5 |
+
+Cells count sessions that deployed, finished, and met their case-specific quality condition. **19/45 did so; all 26 remaining sessions ended in the 120-second invocation timeout.** All 19 deployed policies met quality requirements across their five final seeds. There were also 25 tool-protocol rejections, including recovered errors. The task outcomes did not discriminate among deployed policies; the observed differences are dominated by execution reliability and cannot establish a general ability ranking.
+
+[Results and failure analysis (한국어)](experiments/grok45-v1/REPORT.md) · [Design and commands](experiments/grok45-v1/README.md) · [Machine-readable summary](experiments/grok45-v1/analysis.json) · [Evidence ZIP](experiments/grok45-v1/evidence_bundle.zip)
+
+Verification: 97 tests, lint/type checks, CLI execution/resume, package build, and 1,350 phase ledger hashes checked across 1,050 referenced evaluation databases. There are still zero independently sourced real customer case families. This is not a controlled comparison with the earlier model pilot below.
+
+<a id="latest-experiment-frozen-instructions-on-a-new-mechanism"></a>
+
+## Earlier experiment: frozen instructions on a new mechanism
 
 We froze three instruction texts before implementing an inventory reconciliation case, then ran each with `gpt-5.5` on both support routing and inventory. The texts were an ancestor, a revision previously generated from support development feedback, and a neutral control. The revised text was **not previously established as an improvement**.
 
@@ -66,7 +84,7 @@ The public source and workload generators are available to readers. They are wit
 
 The intended questions are whether model/agent/harness changes improve FDE task performance, whether improvement transfers, and eventually whether systems can substitute for human FDE work. Current changes are constrained policies, not arbitrary customer codebase engineering or organizational negotiation.
 
-The inventory case has a different mechanism and generator, authored after instruction freezing. Its implementation worker did not see the frozen texts, but it is from the same project and is not independent author replication. Development and final workloads share transport patterns. Neither real-world causal attribution nor population generalization follows from this pilot.
+The inventory and recovery cases have different mechanisms and generators, authored after instruction freezing. Its implementation worker did not see the frozen texts, but it is from the same project and is not independent author replication. Development and final workloads share transport patterns. Neither real-world causal attribution nor population generalization follows from this pilot.
 
 Further evidence requires more independently sourced mechanisms, repeated agent sessions, intervention-response validation using actual operational records, and a separate multi-day human comparison. Previously exposed tests cannot become fresh holdouts again.
 

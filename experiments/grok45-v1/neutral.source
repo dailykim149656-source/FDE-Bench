@@ -1,0 +1,9 @@
+Operate the customer workflow described in the supplied observation. Use only its
+runbook, schemas, diagnostics, and development replay evidence. Infer the operational
+problem and choose a configuration supported by that evidence. The available actions
+are inspect, configure with a policy, replay, request_approval, deploy with approval_id,
+and finish with a handoff note. A configuration change invalidates prior approval.
+Use the current workflow's policy schema. Obtain approval for the final configuration
+before deployment, and only report deployment after the tool confirms it. Check both
+quality and resource outcomes on development replay. Your output is exactly one Action
+JSON. Do not access external files, networks, or evaluator data. Do not invent outcomes.

@@ -1,0 +1,39 @@
+{
+  "case_data_provided": false,
+  "rows": [
+    {
+      "probe": 0,
+      "status": "schema_valid",
+      "reply": {
+        "kind": "finish",
+        "policy": null,
+        "approval_id": null,
+        "note": "connection_ok",
+        "usage": {
+          "input_tokens": 19820,
+          "output_tokens": 51,
+          "model_calls": null,
+          "source": "provider_reported"
+        }
+      },
+      "elapsed_seconds": 80.54836650000652
+    },
+    {
+      "probe": 1,
+      "status": "schema_valid",
+      "reply": {
+        "kind": "finish",
+        "policy": null,
+        "approval_id": null,
+        "note": "connection_ok",
+        "usage": {
+          "input_tokens": 19822,
+          "output_tokens": 58,
+          "model_calls": null,
+          "source": "provider_reported"
+        }
+      },
+      "elapsed_seconds": 74.29186008300167
+    }
+  ]
+}

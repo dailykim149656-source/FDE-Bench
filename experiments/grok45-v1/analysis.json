@@ -1,0 +1,32 @@
+{
+  "sessions": 45,
+  "finished_and_deployed": 19,
+  "timeouts": {
+    "timeout: invocation deadline exceeded": 26
+  },
+  "protocol_rejections": {
+    "unexpected_policy_payload": 22,
+    "unexpected_approval_payload": 3
+  },
+  "cli_invocations": 163,
+  "schema_valid_responses": 137,
+  "known_reported_input_tokens": 4059238,
+  "known_reported_output_tokens": 27062,
+  "usage_scope": "schema-valid CLI responses, including tool-rejected actions; timed-out-call usage unavailable; excludes preflight and implementation",
+  "elapsed_minutes": 109.98514396666666,
+  "case_condition_met_sessions": 19,
+  "deployed_policy_quality_failures": 0,
+  "successful_policy_variants": {
+    "inventory": 1,
+    "recovery": 1,
+    "support": 2
+  },
+  "runtime_sha256": "ff15feb6ecb81aceacd8bf01eef8d4c2ce39157692ee8ed295265df120ef4030",
+  "timeout_stage_last_schema_valid_action": {
+    "initial_call": 17,
+    "after_request_approval": 2,
+    "after_inspect": 5,
+    "after_configure": 1,
+    "after_replay": 1
+  }
+}

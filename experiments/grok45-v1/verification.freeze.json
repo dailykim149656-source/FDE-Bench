@@ -1,0 +1,26 @@
+{
+  "frozen_at_utc": "2026-09-08T06:58:20.191362+00:00",
+  "evaluator_version": "ff15feb6ecb81aceacd8bf01eef8d4c2ce39157692ee8ed295265df120ef4030",
+  "registration_sha256": "806f47d2c2f23edb1be598dc7b7d62b970746f6dcf79161686631e2ed36cafa1",
+  "checks": {
+    "pytest": "97 passed",
+    "ruff": "passed",
+    "basedpyright": "0 errors, 0 warnings",
+    "recovery_controls": "reference5/5; incumbent and3wrongpolicies0/5",
+    "cli_scripted_45_sessions": "45sessions225evaluations; recordederrors exit1",
+    "cli_completed_resume": "no development calls; identical verified result",
+    "missing_registration": "exit2",
+    "help": "repeat and resume documented",
+    "package_build": "wheel and sdist built"
+  },
+  "codex_cli_version": "codex-cli 0.144.4",
+  "opencodex_version": "opencodex 2.42.0",
+  "catalog_default_reasoning": "high",
+  "case_model_sessions_started": 0,
+  "software_version_note": "runtime SHA distinguishes builds sharing package0.1.0",
+  "packages": {
+    ".gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+    "fdebench-0.1.0-py3-none-any.whl": "f30e1ab90e32f05504c3c2424041a0ab3104d1f71d682cb43231a5109bee6ae0",
+    "fdebench-0.1.0.tar.gz": "c1afd33cdaa9d97b2804a582e4d5b510393952a6e5f74967de42e5aa701d0817"
+  }
+}

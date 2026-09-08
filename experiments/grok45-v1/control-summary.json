@@ -1,0 +1,10 @@
+{
+  "scope": "authored deterministic policy controls; no model calls or real-world validation",
+  "passing_workloads_out_of_5": {
+    "incumbent": 0,
+    "reference": 5,
+    "immediate_retry": 0,
+    "premature_absence": 0,
+    "lost_state": 0
+  }
+}

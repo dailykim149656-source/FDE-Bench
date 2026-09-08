@@ -8,6 +8,20 @@ A system is a declared model, agent source, harness, and resource budget. An **a
 
 The transfer pilot uses three frozen texts × two cases, one agent session per condition, and three final seeds (701–703). It is a comparison of instruction conditions with a fixed model and harness, not a comparison of model generations. `transfer` currently requires one agent session per condition; additional independent repetitions would need an explicitly revised experimental protocol.
 
+## Repeated Grok experiment
+
+The newer [`repeat` experiment](experiments/grok45-v1/README.md) adds external-effect recovery and runs 45 fresh sessions: three frozen instruction conditions × three mechanisms × five repetitions. Each policy is evaluated on five workload seeds, nested within its session. Average over seeds inside each session first, then report the five session means and their sample standard deviation. The original `transfer` command remains a separate one-session pilot.
+
+Recovery simulates ambiguous acceptance, idempotency semantics, delayed status visibility, and loss of client process state. Its configuration controls timeout action, retry key, response to absence, query wait, and state persistence. Actual SQLite effects and audit rows determine completion, duplicate effects, unresolved jobs, queries, retries, and synthetic recovery delay. The three endpoint variants are one authored mechanism, not three independent cases. Repeated deliveries appear as separate job observations across phases; phase totals are not unique lifetime jobs.
+
+The primary condition requires completed deployment and session termination, plus full correct support coverage without wrong/duplicate effects or backlog; exact inventory with no stale/duplicate writes; or exactly-once confirmed recovery without unresolved jobs. SLA and resource metrics remain separate. See the [results and limitations](experiments/grok45-v1/REPORT.md): 19 sessions met their condition, and all other sessions timed out. All deployed policies met their quality condition.
+
+```bash
+./bench repeat --registration experiments/grok45-v1/registration.execution.json --out runs/new-grok45
+```
+
+The supplied registration archives a local catalog path. For another machine, copy the registration, update the path to its included catalog, and record that change. Real calls require the authenticated OpenCodex route. `--resume` reuses verified completed sessions, including failures; it refuses ambiguous interrupted sessions rather than silently trying again. The concurrency cap was amended from three to two before any case session, following case-free connection checks. No timeout or prompt changes occurred during the 45 sessions.
+
 ## Cases and measurements
 
 | Property | Support routing | Inventory reconciliation |
