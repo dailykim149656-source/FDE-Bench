@@ -1,0 +1,16 @@
+{
+  "artifact": "FDE-Bench v0.2 revision and reference estimator",
+  "date": "2026-09-07",
+  "claim_scope": "R0 synthetic reference checks only",
+  "tests_run": 20,
+  "tests_passed": 20,
+  "independent_second_run_demonstrations_identical": true,
+  "independent_fde_case_families": 0,
+  "python": "3.13.5",
+  "files": {
+    "FDE_Bench_v0.2_Research_Protocol_KO.md": "183b233607cde9cf8791a8ee761e219d5d8ab21414730cee46b0e687f1121832",
+    "README_KO.md": "471b6753bea15f431a140f6bc77e93b8330e8baf88e6a105d076c056525abd4c",
+    "estimator_reference.py": "f4faf64b00026a5becbac6b29449505bd2d1d25e71287e4ada6b347b97d712e1",
+    "results.json": "293707a0a28ef93996d01e357e9c6c7f738af09bfd13bc3a360d6d865f1490f7"
+  }
+}

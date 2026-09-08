@@ -1,0 +1,8 @@
+r1_fieldwork/cases/*
+!r1_fieldwork/cases/_template.json
+r1_fieldwork/private_evidence/
+.DS_Store
+._*
+__pycache__/
+*.py[cod]
+.ruff_cache/
