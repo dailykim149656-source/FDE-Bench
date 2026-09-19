@@ -36,6 +36,8 @@ python3 r1_fieldwork/self_check.py
 
 현재 intake 형식은 **schema_version=2, PROVISIONAL(실무 검토 전 잠정)**이다. 프로토콜에서 출발한 질문표이며 실무자가 확정한 환경 축이 아니다. 이는 데이터 입력 형식이며 연구 프로토콜 v0.3가 아니다. 첫 2–3건 이후 구조를 바꾸면 입력 형식 버전과 변경 이유를 기록하고 원 서술을 보존한다. 문구 설명만 바꾸는 이번 수정은 형식 버전을 올리지 않는다. 실제 입력 기록은 현재 0건이므로 기존 boolean 형식은 자동 변환하지 않는다. 옛 형식은 INVALID로 표시한다. 과거의 true 값을 증거로 변환하지 않는다.
 
+실행 엔진 ontology(`fdebench.execution-ontology.v0.1`)와 이 현장 ontology는 별개다. 사례 기록은 둘 사이의 대응이지, 현장 분류를 엔진 스키마로 고정하는 작업이 아니다. 특히 현장의 `handoff`는 에이전트 `finish` 노트가 아니라 배포 이후 연속성이다. `π₀`는 incumbent 객체와도, baseline 실행 결과와도 구분한다. 대응표는 `./bench ontology`의 `field_section_map`이다.
+
 - source.origin: observed / self_report / synthetic. observed는 관측자료를 확인했다고 작성자가 기록하는 값이다. 프로그램이 진위를 보증하지 않는다.
 - sections: initial_state, pi0_evidence, intervention, deployment_adoption, outcome, handoff, external_shocks, no_intervention 각각 summary와 evidence_ids.
 - baseline: reconstructable은 true/false/null. null은 미확인, false는 reason 필수. runbook_ids, preperiod_ids, workload_ids는 관측자료에 연결하고 validation_plan_ids는 작성한 검증계획 사본에 연결한다.

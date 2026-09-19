@@ -7,6 +7,7 @@ from statistics import mean, stdev
 from pydantic import JsonValue
 
 from fdebench.evaluation import Episode
+from fdebench.ontology import EXECUTION_ONTOLOGY, classify
 
 
 def totals(episode: Episode, *, baseline: bool = False) -> dict[str, float]:
@@ -52,6 +53,18 @@ def summarize(episodes: list[Episode]) -> dict[str, JsonValue]:
                 "action_violations": sum(len(e.session.violations) for e in group),
                 "raw_phase_totals": raw,
                 "mean_delta_from_baseline": delta,
+                "ontology": {
+                    "execution_ontology": EXECUTION_ONTOLOGY,
+                    "failure_classes": list(
+                        dict.fromkeys(
+                            cls
+                            for episode in group
+                            for cls in classify(
+                                episode.session, episode.candidate, episode.baseline
+                            ).failure_classes
+                        )
+                    ),
+                },
             }
         )
     contrasts: list[JsonValue] = []

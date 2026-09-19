@@ -12,6 +12,7 @@ from fdebench.artifacts import canonical, digest_bytes, source_identity, write_j
 from fdebench.cases import workloads
 from fdebench.contracts import PhaseResult, Policy, Record, SystemSpec
 from fdebench.environment import execute
+from fdebench.ontology import EXECUTION_ONTOLOGY, FIELD_ONTOLOGY
 from fdebench.session import SessionResult, run_session
 
 CASE_FAMILY: Final = "authored-support-routing-v1"
@@ -73,6 +74,16 @@ def identity() -> dict[str, JsonValue]:
     version = source_identity()
     return {
         "protocol_version": "0.2",
+        "execution_ontology": EXECUTION_ONTOLOGY,
+        "field_ontology": FIELD_ONTOLOGY,
+        "pi0_model": (
+            "incumbent default policy executed on the same evaluation workload; "
+            "not a validated no-intervention counterfactual"
+        ),
+        "intervention_model": (
+            "mechanical request_approval and synthetic operator_minutes; "
+            "human judgment is not modeled"
+        ),
         "runtime": {
             "python": platform.python_version(),
             "sqlite": sqlite3.sqlite_version,

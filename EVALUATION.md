@@ -63,6 +63,8 @@ Exit 0 means execution completed without recorded agent failures. Exit 1 means c
 
 Keep failed sessions, unapproved deployment attempts, schema errors, transport failures, and costs. Distinguish an interaction error from task outcome failure: the pilot retained two `unexpected_policy_payload` rejections that the agents recovered from. Policy/API changes can confound portability with task reasoning.
 
+Those classes are named in `fdebench.execution-ontology.v0.1`: `interaction.*`, `execution.timeout`, `execution.budget_exhaustion`, `execution.deployment_failure`, `task.*`, and `handoff.post_shock_regression`. Do not collapse them into one failure rate. `./bench ontology --artifact path.json` classifies a stored session or episode. Field intake remains `fdebench.field-ontology.PROVISIONAL`.
+
 ## Artifacts and reproduction
 
 Each transfer output contains:

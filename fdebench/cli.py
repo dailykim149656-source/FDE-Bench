@@ -1,15 +1,17 @@
 """Command-line surface for reproducible system comparison and improvement trajectories."""
 
 import argparse
+import json
 import sqlite3
 import sys
 from pathlib import Path
 
-from pydantic import ValidationError
+from pydantic import JsonValue, TypeAdapter, ValidationError
 
 from fdebench.artifacts import write_json
 from fdebench.evolution import evolve
 from fdebench.imported import compare_runs
+from fdebench.ontology import catalog, classify_payload
 from fdebench.repeated import run_repeated
 from fdebench.runner import run_suite
 from fdebench.transfer import run_transfer
@@ -42,7 +44,29 @@ def main() -> int:
     repeat.add_argument("--out", type=Path, required=True)
     repeat.add_argument("--resume", action="store_true",
                         help="Reuse verified completed sessions; never retry interrupted sessions")
+    ontology = commands.add_parser(
+        "ontology", help="Dump execution ontology or classify a recorded session/episode"
+    )
+    ontology.add_argument(
+        "--artifact",
+        type=Path,
+        help="episode.json, session.json, or evaluation.json",
+    )
     args = parser.parse_args()
+    if args.command == "ontology":
+        try:
+            if args.artifact is None:
+                payload = catalog()
+            else:
+                raw = TypeAdapter(dict[str, JsonValue]).validate_json(
+                    args.artifact.read_bytes()
+                )
+                payload = classify_payload(raw).model_dump(mode="json")
+        except (OSError, ValueError, ValidationError) as exc:
+            print(f"fdebench: {exc}", file=sys.stderr)
+            return 2
+        print(json.dumps(payload, indent=2, ensure_ascii=False))
+        return 0
     existed = args.out.exists()
     try:
         if args.command == "run":

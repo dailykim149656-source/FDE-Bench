@@ -4,6 +4,8 @@ An executable research prototype for evaluating how AI systems diagnose, configu
 
 **Current scope: three authored synthetic mechanisms, zero real customer case families.** The benchmark records transaction outcomes rather than grading persuasive answers. It does not establish AGI, human FDE replacement, or recursive improvement gains.
 
+The executable world is named `fdebench.execution-ontology.v0.1`. Field intake stays `fdebench.field-ontology.PROVISIONAL` and is not locked before real interviews. Timeout, protocol rejection, and task-outcome errors are different classes, not one failure rate. `./bench ontology` dumps the catalog; `./bench ontology --artifact path.json` classifies a stored session or episode.
+
 [한국어 프로젝트 설명](README_KO.md) · [Evaluation methodology](EVALUATION.md) · [Transfer experiment report (한국어)](experiments/transfer-v1/REPORT.md)
 
 ## Latest results: 45 repeated Grok 4.6 sessions
